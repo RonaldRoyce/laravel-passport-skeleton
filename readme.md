@@ -14,5 +14,14 @@ The Passport Skeleton skeleton is open-source software licensed under the [MIT l
 ## Installation
 
 <ul>
-  <li>composer create-project https://github.com/ronaldroyce/laravel-passport-skeleton [dirname]</li<>
+  <li>composer create-project https://github.com/ronaldroyce/laravel-passport-skeleton [dirname]</li>
+  <li>cp .env.example .env
+  <li>php artisan key:generate</li>
+  <li>php artisan passport:client</li>
+  <li>Edit the .env file and specify the values displayed in above step for:
+    <ul>
+      <li>PASSPORT_CLIENT_ID</li>
+      <li>PASSPORT_SECRET</li>
+      <li>PASSPORT_CERT_DIR</li>
     </ul>
+</ul>
