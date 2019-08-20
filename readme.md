@@ -24,4 +24,5 @@ The Passport Skeleton skeleton is open-source software licensed under the [MIT l
       <li>PASSPORT_SECRET</li>
       <li>PASSPORT_CERT_DIR</li>
     </ul>
+  </li>
 </ul>
