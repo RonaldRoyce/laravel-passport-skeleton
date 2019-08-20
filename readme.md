@@ -14,5 +14,5 @@ The Passport Skeleton skeleton is open-source software licensed under the [MIT l
 ## Installation
 
 <ul>
-  <li>composer create-project https://github.com/ronaldroyce/laravel-passport-skeleton <dirname></li<
+  <li>composer create-project https://github.com/ronaldroyce/laravel-passport-skeleton <dirname></li<>
     </ul>
