@@ -22,7 +22,7 @@ The Passport Skeleton skeleton is open-source software licensed under the [MIT l
     <ul>
       <li>PASSPORT_CLIENT_ID</li>
       <li>PASSPORT_SECRET</li>
-      <li>PASSPORT_CERT_DIR   (Directory to store the oauth cert key files</li>
+      <li>PASSPORT_CERT_DIR   (Directory to store the oauth cert key files)</li>
     </ul>
   </li>
 </ul>
