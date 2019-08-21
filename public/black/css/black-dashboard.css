@@ -1840,7 +1840,7 @@ pre code {
   font-size: 0.875rem;
   line-height: 1.428571;
   color: rgba(255, 255, 255, 0.8);
-  background-color: transparent;
+  background-color: #1c1c25;
   background-clip: padding-box;
   border: 1px solid #cad1d7;
   border-radius: 0.25rem;
@@ -1868,7 +1868,7 @@ pre code {
 }
 
 .form-control::placeholder {
-  color: #adb5bd;
+  color: #000000;
   opacity: 1;
 }
 
@@ -5411,7 +5411,7 @@ input[type="button"].btn-block {
 
 .alert-danger {
   color: #fd5d93;
-  background-color: #fd77a4;
+  background-color: #ff0000;
   border-color: #fd77a4;
 }
 
@@ -12275,25 +12275,25 @@ fieldset[disabled] .btn-link.active {
 /* Form controls */
 
 .form-control::-moz-placeholder {
-  color: #6c757c;
+  color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .form-control:-moz-placeholder {
-  color: #6c757c;
+  color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .form-control::-webkit-input-placeholder {
-  color: #6c757c;
+  color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .form-control:-ms-input-placeholder {
-  color: #6c757c;
+  color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -12516,25 +12516,26 @@ img {
 }
 
 .modal.modal-default .form-control::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+  color: #000000;
+/* rgba(255, 255, 255, 0.4); */
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .modal.modal-default .form-control:-moz-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .modal.modal-default .form-control::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .modal.modal-default .form-control:-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -12651,25 +12652,25 @@ img {
 }
 
 .modal.modal-primary .form-control::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .modal.modal-primary .form-control:-moz-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .modal.modal-primary .form-control::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .modal.modal-primary .form-control:-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -12786,25 +12787,25 @@ img {
 }
 
 .modal.modal-danger .form-control::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .modal.modal-danger .form-control:-moz-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .modal.modal-danger .form-control::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .modal.modal-danger .form-control:-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -12921,25 +12922,25 @@ img {
 }
 
 .modal.modal-warning .form-control::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .modal.modal-warning .form-control:-moz-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .modal.modal-warning .form-control::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .modal.modal-warning .form-control:-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -13056,25 +13057,25 @@ img {
 }
 
 .modal.modal-success .form-control::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .modal.modal-success .form-control:-moz-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .modal.modal-success .form-control::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .modal.modal-success .form-control:-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -13191,25 +13192,25 @@ img {
 }
 
 .modal.modal-info .form-control::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .modal.modal-info .form-control:-moz-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .modal.modal-info .form-control::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .modal.modal-info .form-control:-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -13449,7 +13450,7 @@ img {
 }
 
 .navbar.bg-white .form-control::placeholder {
-  color: #9A9A9A !important;
+  color: #000000 !important;
 }
 
 .navbar.bg-dark {
@@ -14874,9 +14875,10 @@ table.tablesorter thead tr .headerSortDown {
   transition: 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
 }
 
-.sidebar p, .sidebar span, .sidebar a.simple-text.logo-mini, a.simple-text.logo-normal, i.tim-icons, i.fab, b.caret {
+.sidebar p, .sidebar span, .sidebar a.simple-text.logo-mini, a.simple-text.logo-normal, i.tim-icons, i.fab, b.caret, i.fa.fa-users, i.fa.fa-sign-out,
+   i.fa.fa-object-group {
 	color: #000000 !important;
-	font-weight: bold;
+/*	font-weight: bold; */
 }
 
 i.tim-icons.icon-zoom-split, i.tim-icons.icon-sound-wave {
@@ -15024,7 +15026,7 @@ i.tim-icons.icon-zoom-split, i.tim-icons.icon-sound-wave {
   position: relative;
   text-transform: uppercase;
   cursor: pointer;
-  font-size: 0.62475rem;
+  font-size: 0.72475rem;
   padding: 10px 8px;
   line-height: 1.625rem;
 }
@@ -16566,7 +16568,7 @@ textarea.form-control:active {
 }
 
 .modal-search .modal-dialog .form-control::placeholder {
-  color: #222a42;
+ color: #000000;
 }
 
 .input-group-prepend {
@@ -16928,7 +16930,7 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .white-content .navbar.navbar-transparent .search-bar.input-group .form-control::placeholder {
-  color: #9A9A9A;
+ color: #000000;
 }
 
 .white-content .sidebar {
@@ -16969,25 +16971,25 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .white-content .form-control::-moz-placeholder {
-  color: rgba(34, 42, 66, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .white-content .form-control:-moz-placeholder {
-  color: rgba(34, 42, 66, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .white-content .form-control::-webkit-input-placeholder {
-  color: rgba(34, 42, 66, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .white-content .form-control:-ms-input-placeholder {
-  color: rgba(34, 42, 66, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -17342,25 +17344,25 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .card.card-white .form-control::-moz-placeholder {
-  color: rgba(34, 42, 66, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .card.card-white .form-control:-moz-placeholder {
-  color: rgba(34, 42, 66, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .card.card-white .form-control::-webkit-input-placeholder {
-  color: rgba(34, 42, 66, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
 
 .card.card-white .form-control:-ms-input-placeholder {
-  color: rgba(34, 42, 66, 0.4);
+ color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -17801,16 +17803,17 @@ Copyright (c) 2015 Daniel Eden
 
 .login-page .card-login .card-header .card-title {
   position: relative;
-  font-size: 5em;
+  font-size: 3em;
   font-weight: 900;
-  color: #222a42;
-  text-transform: lowercase;
-  margin-left: -5px;
+  color: #000000 !important;
+  text-align: center;
+  margin-left: 10px;
+  margin-top: 10px;
   z-index: 1;
 }
 
 .login-page .card-login .card-header {
-  padding: 0 0 100px;
+  padding: 0 0 0px;
   overflow: hidden;
 }
 
@@ -17906,5 +17909,23 @@ Copyright (c) 2015 Daniel Eden
 .sidebar .sidebar-wrapper>.nav [data-toggle="collapse"]~div>ul>li>a i, .sidebar .sidebar-wrapper .user .info [data-toggle="collapse"]~div>ul>li>a i, .off-canvas-sidebar .sidebar-wrapper>.nav [data-toggle="collapse"]~div>ul>li>a i, .off-canvas-sidebar .sidebar-wrapper .user .info [data-toggle="collapse"]~div>ul>li>a i {
   line-height: 32px;
 }
+
+div.card-header.card-header-slim {
+	height: 67px;
+	line-height: 67px;
+}
+
+div.slim {
+	line-height: 50px;
+}
+
+h3.slim {
+	height: 30px;
+	padding: 0px;
+	margin: 0px;
+	line-height: 49px;
+	color: #000000;
+}
+
 
 /*# sourceMappingURL=dashboard-free.css.map */

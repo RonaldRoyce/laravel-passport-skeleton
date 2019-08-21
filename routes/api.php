@@ -21,3 +21,4 @@ Route::middleware('client_credentials')->get('/my', function (Request $request) 
         return array('user_id' => 1);
 });
 
+

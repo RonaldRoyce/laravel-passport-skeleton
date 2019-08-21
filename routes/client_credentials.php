@@ -22,3 +22,11 @@ Route::middleware('client_credentials')->get('/my', function (Request $request) 
 });
 
 Route::get('oauth/token', 'AuthController@auth');
+
+Route::middleware('client_credentials')->get('/groups/add', 'Api\GroupApiController@create')->name('groupscreate');
+
+/*
+Route::middleware('client_credentials')->get('/groups/add', function (Request $request) {
+        return array('user_id' => 1);
+});
+*/
