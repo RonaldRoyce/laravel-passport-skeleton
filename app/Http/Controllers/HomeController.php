@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -23,10 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-	var_dump(Auth::user()->group());
+	$user = Auth::user();
 
-	exit(1);
+        $group = $user->group;
 
-        return view('dashboard');
+        return view('dashboard', ["group" => $group]);
     }
 }

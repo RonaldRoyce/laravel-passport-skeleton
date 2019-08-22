@@ -37,8 +37,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function username() 
+    {
+	return $this->username;
+    }
+
     public function group()
     {
-        return $this->belongsTo('App\Models\Ldap\Group', 'group_id');
+        return $this->belongsTo('App\Models\Ldap\Group', 'group_id', 'group_id');
     }
 }

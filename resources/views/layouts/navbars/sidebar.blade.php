@@ -12,6 +12,7 @@
                 </a>
             </li>
 
+	    @if (Auth::user()->group->name == 'Managers 2')
             <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
                     <i class="fa fa-users"></i>
@@ -35,6 +36,7 @@
                     </ul>
                 </div>
             </li>
+	    @endif
             <li @if ($pageSlug == 'icons') class="active " @endif>
                 <a href="{{ route('pages.icons') }}">
                     <i class="tim-icons icon-atom"></i>
@@ -44,7 +46,7 @@
             <li>
                 <a data-toggle="collapse" href="#user-menu" aria-expanded="true">
                     <img src="/black/img/anime3.png" alt="Profile Photo" style="width: 30px; height: 30px;border-radius: 2.2857rem;">
-                    <span class="nav-link-text" >{{ Auth::user()->name }} &nbsp; {{Auth::user()->group()}}</span>
+                    <span class="nav-link-text" >{{ Auth::user()->name }}&nbsp;-&nbsp;{{Auth::user()->group->name}}</span>
                 </a>
 
                 <div class="collapse show" id="user-menu">
