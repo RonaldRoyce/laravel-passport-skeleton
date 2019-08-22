@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +22,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/oauthadmin', 'OauthController@index')->name('oauthadmin');
-
+/*
 Route::middleware('auth')->get('/callback', function (Request $request) {
+	Log::debug("At top of callback");
+
 	$client_id = env('PASSPORT_CLIENT_ID');
 	$client_secret = env('PASSPORT_SECRET');
 
@@ -39,8 +42,36 @@ Route::middleware('auth')->get('/callback', function (Request $request) {
 
 	$instance = Route::dispatch($tokenRequest);
 
+	Log::debug("At bottom of callback");
+
 	return json_decode($instance->getContent(), true);
 });
+*/
+
+Route::middleware('auth')->get('/token', function (Request $request) {
+        Log::debug("At top of token");
+
+        $client_id = env('PASSPORT_CLIENT_ID');
+        $client_secret = env('PASSPORT_SECRET');
+
+        $request->request->add([
+                "grant_type" => "client_credentials",
+                "client_id" => $client_id,
+                "client_secret" => $client_secret,
+        ]);
+
+        $tokenRequest = $request->create(
+                env('APP_URL', 'http://localhost') . '/oauth/token',
+                'post'
+        );
+
+        $instance = Route::dispatch($tokenRequest);
+
+        Log::debug("At bottom of token");
+
+        return json_decode($instance->getContent(), true);
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');

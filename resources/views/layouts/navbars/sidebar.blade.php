@@ -44,7 +44,7 @@
             <li>
                 <a data-toggle="collapse" href="#user-menu" aria-expanded="true">
                     <img src="/black/img/anime3.png" alt="Profile Photo" style="width: 30px; height: 30px;border-radius: 2.2857rem;">
-                    <span class="nav-link-text" >{{ Auth::user()->name }}</span>
+                    <span class="nav-link-text" >{{ Auth::user()->name }} &nbsp; {{Auth::user()->group()}}</span>
                 </a>
 
                 <div class="collapse show" id="user-menu">

@@ -218,5 +218,6 @@
             });
         </script>
         @stack('js')
+	@stack('view-scripts')
     </body>
 </html>

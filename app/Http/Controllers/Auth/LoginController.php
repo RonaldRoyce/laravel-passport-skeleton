@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Adldap\AdldapInterface;
 use Illuminate\Support\Facades\Auth;
 use Adldap\Laravel\Facades\Adldap;
+use App\Models\Ldap\Group;
 
 class LoginController extends Controller
 {
@@ -63,12 +64,34 @@ class LoginController extends Controller
 	        ->with('error', 'Invalid email/password entered');
    }
 */
+
+ protected function saveGroups()
+ {
+	$groups = $this->adldap->search()->groups()->get();
+
+	foreach ($groups as $group) 
+	{
+		$id = $group->getAttributes()['gidnumber'][0];
+		$name = $group->getAttributes()['cn'][0];
+
+		$g = Group::find($id);
+
+		if (!$g)
+		{
+			Group::create(array('id' => $id, 'name' => $name));
+		}
+	}
+ }
+
  protected function attemptLogin(Request $request) {
         $credentials = $request->only($this->username(), 'password');
         $username = $credentials[$this->username()];
         $password = $credentials['password'];
 
         if(Adldap::auth()->attempt($username, $password, $bindAsUser = true)) {
+
+	    $this->saveGroups();
+
             $user = \App\User::where($this->username(), $username) -> first();
             if (!$user) {
                 // the user doesn't exist in the local database, so we have to create one
@@ -102,9 +125,6 @@ class LoginController extends Controller
     {
         $ldapuser = Adldap::search()->where(env('LDAP_USER_ATTRIBUTE'), '=', $username)->first();
         if ( !$ldapuser ) {
-            // log error
-	echo "NOT FOUND<br>";
-	exit(1);
             return false;
         }
 
@@ -151,6 +171,8 @@ class LoginController extends Controller
 
             // now it returns the first item, but it could return
             // a comma-separated string or any other thing that suits you better
+
+
             $attrs[$local_attr] = $ldapuser_attrs[$ldap_attr][0];
             //$attrs[$local_attr] = implode(',', $ldapuser_attrs[$ldap_attr]);
         }

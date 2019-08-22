@@ -17927,5 +17927,30 @@ h3.slim {
 	color: #000000;
 }
 
+td.action-btns {
+   width: 300px;
+   text-align: center;
+}
+
+thead.ldap-groups {
+	display: block;
+}
+
+tbody.ldap-groups {
+	display: block;
+	max-height: 787px;
+	overflow-y: auto;
+}
+
+th.ldap-group-name, td.ldap-group-name {
+	width: 380px;
+	max-width: 380px;
+}
+
+th.ldap-group-action, td.ldap-group-action {
+	width: 300px;
+	max-width: 300px;
+}
+
 
 /*# sourceMappingURL=dashboard-free.css.map */

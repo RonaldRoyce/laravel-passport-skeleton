@@ -31,19 +31,6 @@ class GroupController extends Controller
      */
     public function index()
     {
-/*
-	$group = $this->_adldap->make()->group([ 'gidnumber' => 504 ]);
-
-$dn = $group->getDnBuilder();
-$dn->addOu('groups');
-$dn->addCn("Managers 2");
-
-$group->setDn($dn);
-
-print_r($group);
-
-	$group->save();
-*/
 	$groups = Adldap::search()->groups()->get();
 
 	$allGroups = array();
@@ -57,25 +44,12 @@ print_r($group);
 		$allGroups[] = $group;
 	}
 
+	$names = array_column($allGroups, "name");
+	$ids = array_column($allGroups, "id");
+
+	array_multisort($names, SORT_ASC, $ids, SORT_ASC, $allGroups);
 
         return view('ldap.groups.index', ["groups" => $allGroups]);
-    }
-
-/*
-    public function create(Request $request)
-    {
-	throw new \Exception("Error");
-
-	return json_encode(array("user_id" => 1));
-    }
-*/
-    public function add(Request $request)
-    {
-	$response = array("success" => true, "message" => "");
-
-	echo json_encode($response);
-
-	exit(1);
     }
 }
 

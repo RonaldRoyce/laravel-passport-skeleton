@@ -14,17 +14,17 @@
 		</div>
                 <div class="card-body">
 			<table class="table table-striped table-bordered">
-				<thead class="thead-light">
+				<thead class="thead-light ldap-groups">
 					<tr>
-						<th scope="col">Id</th>
-						<th scope="col">Name</th>
+						<th scope="col" class="ldap-group-name">Name</th>
+						<th scope="col" class="ldap-group-action">Action</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody class="ldap-groups">
 					@foreach ($groups as $group)
 						<tr>
-							<td>{{$group->id}}</td>
-							<td>{{$group->name}}</td>
+							<td class="ldap-group-name">{{$group->name}}</td>
+							<td class="action-btns ldap-group-action"><button type="button" class="btn btn-primary" id="rename-group" data-name="{{$group->name}}" data-id="{{$group->id}}">Rename</button>&nbsp;<button type="button" id="delete-group" class="btn btn-danger" data-name="{{$group->name}}" data-id="{{$group->id}}">Delete</button></td>
 						</tr>
 					@endforeach
 				</tbody>
@@ -45,9 +45,6 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form class="form" action="/api/groups/add" method="POST">
-        @csrf
-
       <div class="modal-body">
           		<div>
             			<label for="role-id" class="col-form-label">Role Id</label>
@@ -60,54 +57,42 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="addrole-btn" type="submit" class="btn btn-primary">Save changes</button>
+        <button id="addrole-btn" type="button" class="btn btn-primary">Save changes</button>
       </div>
-      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteGroupModal" tabindex="-1" role="dialog" aria-labelledby="addRoleLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="addRoleModalLabel">Delete User Role</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <input type="hidden" id="role-id" />
+      <div class="modal-body">
+                        <div>Are you sure you wish to delete the role: <span id="role-name" style="font-weight: bold;"></span></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" id="execute-delete-group-btn" class="btn btn-danger">Delete</button>
+      </div>
     </div>
   </div>
 </div>
 
 @endsection
 
-@push('js')
+@push('view-scripts')
 <script style="text/javascript">
-$(function() {
-
-    $('#addRoleModal').submit(function() {
-
-                              $.ajax({
-                                        url: '<?php echo env('APP_URL', 'http://localhost') . "/callback" ?>',
-                                        type:"GET",
-                                        success: function(data, textStatus, jqXHR)
-                                        {
-                                                var token = data['access_token'];
-                                                $.ajax({
-                                                        url: '<?php echo env('APP_URL', 'http://localhost') . "/api/groups/add" ?>',
-                                                        type:"GET",
-                                                        headers: {'Authorization': "Bearer " + token, "Accept" : "application/json", "Content-Type": "application/json" },
-							data: {roleid: 200, rolename: 'My Role 200'},
-                                                        success: function(data, textStatus, jqXHR)
-                                                        {
-                                                                var a = 1;
-								return true;
-                                                        },
-                                                        error: function (jqXHR, textStatus, errorThrown)
-                                                        {
-                                                                var b = 1;
-								return false;
-                                                        }
-                                                });
-                                        },
-                                        error: function (jqXHR, textStatus, errorThrown)
-                                        {
-                                                var b = 1;
-						return false;
-                                        }
-                                });
-
-				return false;
-    });
-});
+	var tokenUrl = "<?php echo env('APP_URL', 'http://localhost') . '/token' ?>";
+	var groupAddUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/groups/add' ?>";
+	var groupDeleteUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/groups/delete' ?>";
 </script>
+
+<script style="text/javascript" src="/js/ldapgroup.js"></script>
 @endpush
 

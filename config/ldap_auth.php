@@ -293,6 +293,7 @@ return [
 
         'name' => 'cn',
 
+	'group_id' => 'businesscategory',
     ],
 
     /*
