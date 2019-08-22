@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Ldap;
+namespace App\Models\Role;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,4 +38,9 @@ class Role extends Model
     	{
         	return $this->hasMany('App\User', 'role_id', 'role_id');
     	}
+
+	public function permissions()
+	{
+		return $this->hasMany('App\Models\Role\RolePermission', 'role_id', 'role_id');
+	}
 }

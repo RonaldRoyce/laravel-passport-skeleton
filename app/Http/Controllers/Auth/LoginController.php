@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Adldap\AdldapInterface;
 use Illuminate\Support\Facades\Auth;
 use Adldap\Laravel\Facades\Adldap;
-use App\Models\Ldap\Group;
+use App\Models\Role\Role;
 
 class LoginController extends Controller
 {
@@ -65,7 +65,7 @@ class LoginController extends Controller
    }
 */
 
- protected function saveGroups()
+ protected function saveRoles()
  {
 	$groups = $this->adldap->search()->groups()->get();
 
@@ -74,11 +74,11 @@ class LoginController extends Controller
 		$id = $group->getAttributes()['gidnumber'][0];
 		$name = $group->getAttributes()['cn'][0];
 
-		$g = Group::find($id);
+		$g = Role::find($id);
 
 		if (!$g)
 		{
-			Group::create(array('id' => $id, 'name' => $name));
+			Role::create(array('role_id' => $id, 'name' => $name));
 		}
 	}
  }
@@ -90,7 +90,7 @@ class LoginController extends Controller
 
         if(Adldap::auth()->attempt($username, $password, $bindAsUser = true)) {
 
-	    $this->saveGroups();
+	    $this->saveRoles();
 
             $user = \App\User::where($this->username(), $username) -> first();
             if (!$user) {
@@ -108,7 +108,21 @@ class LoginController extends Controller
                     $user->$field = $value !== null ? $value : '';
                 }
             }
+	    else
+	    {
+		$permissions = $user->role->permissions;
 
+		foreach ($permissions as $rolePermission)
+		{
+			$p = $rolePermission->permission;
+
+			foreach ($p as $permission);
+			{
+				echo "Page: " . $permission->page_id . "<br>";
+			}
+		}
+		exit(1);
+	    }
             // by logging the user we create the session, so there is no need to login again (in the configured time).
             // pass false as second parameter if you want to force the session to expire when the user closes the browser.
             // have a look at the section 'session lifetime' in `config/session.php` for more options.
