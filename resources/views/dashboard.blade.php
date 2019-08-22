@@ -2,9 +2,6 @@
 
 @section('content')
     <div class="row">
-	Group:&nbsp;<?php if ($group && strlen($group->name) > 0) { echo $group->name;  } else { echo "Unknown"; } ?> 
-    </div>
-    <div class="row">
         <div class="col-12">
             <div class="card card-chart">
                 <div class="card-header ">

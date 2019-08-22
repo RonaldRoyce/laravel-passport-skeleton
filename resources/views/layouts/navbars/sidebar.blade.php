@@ -12,7 +12,7 @@
                 </a>
             </li>
 
-	    @if (Auth::user()->group->name == 'Managers 2')
+	    @if (Auth::user()->role->name == 'Managers 2')
             <li>
                 <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
                     <i class="fa fa-users"></i>
@@ -30,7 +30,7 @@
                         <li @if ($pageSlug == 'users') class="active " @endif>
                             <a href="{{ route('groups')  }}">
                                 <i class="fa fa-object-group"></i>
-                                <p>{{ _('LDAP Groups') }}</p>
+                                <p>{{ _('Roles') }}</p>
                             </a>
                         </li>
                     </ul>
@@ -46,7 +46,7 @@
             <li>
                 <a data-toggle="collapse" href="#user-menu" aria-expanded="true">
                     <img src="/black/img/anime3.png" alt="Profile Photo" style="width: 30px; height: 30px;border-radius: 2.2857rem;">
-                    <span class="nav-link-text" >{{ Auth::user()->name }}&nbsp;-&nbsp;{{Auth::user()->group->name}}</span>
+                    <span class="nav-link-text" >{{ Auth::user()->name }}&nbsp;-&nbsp;{{Auth::user()->role->name}}</span>
                 </a>
 
                 <div class="collapse show" id="user-menu">

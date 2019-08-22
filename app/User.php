@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'group_id',
+        'name', 'email', 'password', 'role_id',
     ];
 
     /**
@@ -42,8 +42,8 @@ class User extends Authenticatable
 	return $this->username;
     }
 
-    public function group()
+    public function role()
     {
-        return $this->belongsTo('App\Models\Ldap\Group', 'group_id', 'group_id');
+        return $this->belongsTo('App\Models\Ldap\Role', 'role_id', 'role_id');
     }
 }

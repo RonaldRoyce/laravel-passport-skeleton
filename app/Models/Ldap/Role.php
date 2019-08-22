@@ -4,24 +4,24 @@ namespace App\Models\Ldap;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Group extends Model
+class Role extends Model
 {
-  	protected $table = 'groups';
-	protected $primaryKey = 'group_id';
-	protected $fillable = array('group_id', 'name');
+  	protected $table = 'roles';
+	protected $primaryKey = 'role_id';
+	protected $fillable = array('role_id', 'name');
 	public $timestamps = false;
 
-	private $group_id = 0;
+	private $role_id = 0;
 	private $name = "";
 
 	public function getId()
 	{
-		return $this->group_id;
+		return $this->role_id;
 	}
 
 	public function setid($id)
 	{
-		$this->group_id = $id;
+		$this->role_id = $id;
 	}
 
 	public function getName()
@@ -36,6 +36,6 @@ class Group extends Model
 
     	public function users()
     	{
-        	return $this->hasMany('App\User', 'group_id', 'group_id');
+        	return $this->hasMany('App\User', 'role_id', 'role_id');
     	}
 }
