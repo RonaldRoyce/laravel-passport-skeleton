@@ -8,8 +8,10 @@ use Adldap\Laravel\Facades\Adldap;
 
 use Adldap\AdldapInterface;
 use Illuminate\Support\Facades\Log;
+use App\Models\Role\RolePermission;
+use App\Models\Role\Permission;
 
-class GroupApiController extends Controller
+class RoleApiController extends Controller
 {
 	protected $_adldap;
 
@@ -44,15 +46,11 @@ class GroupApiController extends Controller
 
 	$group->setDn($dn);
 
-	Log::debug("$d - GroupApiController going to create");
-
 	try
 	{
 		$group->create();
 
 		$group = null;
-
-                Log::debug("$d - GroupApiController created successfully");
 
 	        return array("success" => true, "message" => "");
 	}
@@ -83,5 +81,67 @@ class GroupApiController extends Controller
 
 	return array("success" => true, "message" => "");
     }
+
+    private function setPermissionGranted(&$permissions, $permission)
+    {
+	for($i = 0; $i < count($permissions); $i++)
+	{
+		if ($permissions[$i]["permission_id"] == $permission->permission_id)
+		{
+			$permissions[$i]["granted"] = true;
+			return;
+		}
+	}
+    }
+
+    public function getRolePermissions(Request $request)
+    {
+	$roleId = $request->all()['roleid'];
+
+        \Illuminate\Support\Facades\Log::debug("Calling RolePermission::where('role_id', $roleId)");
+
+        $rolePermissions = RolePermission::where('role_id', "=", $roleId)->get();
+
+        $rolePermissionsList = array();
+
+        $rolesDefined = array();
+
+	$data = null;
+
+	$allPermissions = Permission::all()->sortBy('name');
+
+	$outputPermissions = array();
+
+        foreach ($allPermissions as $permission)
+        {
+                $outputPermissions[] = array("permission_id" => $permission->permission_id, "name" => $permission->name, "page_id" => $permission->page_id, "granted" => false);
+        }
+
+        foreach ($rolePermissions as $rolePermission)
+        {
+                $role = $rolePermission->role;
+		$roleId = $role->role_id;
+		$roleName = $role->name;
+                $permissions = $rolePermission->permissions;
+
+		if (!$data)
+		{
+			$data = array("role_id" => $roleId, "role_name" => $roleName);
+		}
+			
+		foreach ($permissions as $permission)
+		{
+			$this->setPermissionGranted($outputPermissions, $permission);
+		}
+        }
+
+	if ($data)
+	{
+		$data["permissions"] = $outputPermissions;
+	}
+
+	return $data;
+    }
+
 }
 

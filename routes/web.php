@@ -93,5 +93,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 });
 
-Route::middleware('auth')->get('/admin/groups', 'Ldap\GroupController@index')->name('groups');
+Route::middleware('auth')->get('/admin/roles', 'Role\RoleController@index')->name('roles');
+Route::middleware('auth')->get('/admin/rolepermissions', 'Role\RolePermissionsController@index')->name('rolepermissions');
+
 

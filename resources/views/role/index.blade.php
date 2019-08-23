@@ -21,10 +21,10 @@
 					</tr>
 				</thead>
 				<tbody class="ldap-groups">
-					@foreach ($groups as $group)
+					@foreach ($roles as $role)
 						<tr>
-							<td class="ldap-group-name">{{$group->name}}</td>
-							<td class="action-btns ldap-group-action"><button type="button" class="btn btn-primary" id="rename-group" data-name="{{$group->name}}" data-id="{{$group->id}}">Rename</button>&nbsp;<button type="button" id="delete-group" class="btn btn-danger" data-name="{{$group->name}}" data-id="{{$group->id}}">Delete</button></td>
+							<td class="ldap-group-name">{{$role->name}}</td>
+							<td class="action-btns ldap-group-action"><button type="button" class="btn btn-primary" id="rename-role" data-name="{{$role->name}}" data-id="{{$role->id}}">Rename</button>&nbsp;<button type="button" id="delete-role" class="btn btn-danger" data-name="{{$role->name}}" data-id="{{$role->id}}">Delete</button></td>
 						</tr>
 					@endforeach
 				</tbody>
@@ -63,7 +63,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="deleteGroupModal" tabindex="-1" role="dialog" aria-labelledby="addRoleLabel" aria-hidden="true">
+<div class="modal fade" id="deleteRoleModal" tabindex="-1" role="dialog" aria-labelledby="addRoleLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -78,7 +78,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        <button type="button" id="execute-delete-group-btn" class="btn btn-danger">Delete</button>
+        <button type="button" id="execute-delete-role-btn" class="btn btn-danger">Delete</button>
       </div>
     </div>
   </div>
@@ -89,10 +89,10 @@
 @push('view-scripts')
 <script style="text/javascript">
 	var tokenUrl = "<?php echo env('APP_URL', 'http://localhost') . '/token' ?>";
-	var groupAddUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/groups/add' ?>";
-	var groupDeleteUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/groups/delete' ?>";
+	var roleAddUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/role/add' ?>";
+	var roleDeleteUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/role/delete' ?>";
 </script>
 
-<script style="text/javascript" src="/js/ldapgroup.js"></script>
+<script style="text/javascript" src="/js/role.js"></script>
 @endpush
 

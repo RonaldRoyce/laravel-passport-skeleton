@@ -27,12 +27,19 @@
                                 <p>{{ _('User Management') }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'users') class="active " @endif>
-                            <a href="{{ route('groups')  }}">
+                        <li @if ($pageSlug == 'roles') class="active " @endif>
+                            <a href="{{ route('roles')  }}">
                                 <i class="fa fa-object-group"></i>
                                 <p>{{ _('Roles') }}</p>
                             </a>
                         </li>
+                        <li @if ($pageSlug == 'rolepermissions') class="active " @endif>
+                            <a href="{{ route('rolepermissions')  }}">
+                                <i class="fa fa-object-group"></i>
+                                <p>{{ _('Role Permissions') }}</p>
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </li>

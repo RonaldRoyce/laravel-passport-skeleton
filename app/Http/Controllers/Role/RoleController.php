@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Ldap;
+namespace App\Http\Controllers\Role;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Adldap\Laravel\Facades\Adldap;
+use App\Http\Controllers\Controller;
 
 use Adldap\AdldapInterface;
 
-class GroupController extends Controller
+class RoleController extends Controller
 {
 	protected $_adldap;
 
@@ -49,7 +50,7 @@ class GroupController extends Controller
 
 	array_multisort($names, SORT_ASC, $ids, SORT_ASC, $allGroups);
 
-        return view('ldap.groups.index', ["groups" => $allGroups]);
+        return view('role.index', ["roles" => $allGroups]);
     }
 }
 

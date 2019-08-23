@@ -1523,6 +1523,29 @@ pre code {
   border-bottom-width: 0.125rem;
 }
 
+
+
+.table-bordered-black {
+  border: 1.0625rem solid #344675;
+}
+
+.table-bordered-black th,
+.table-bordered-black td {
+  border: .5rem solid #344675;
+}
+
+
+.table-bordered-black td.light-background {
+  border: .2rem solid #344675;
+}
+
+.table-bordered-black thead th,
+.table-bordered-black thead td {
+  border-bottom-width: 0.5rem;
+}
+
+
+
 .table-borderless th,
 .table-borderless td,
 .table-borderless thead th,
@@ -14176,6 +14199,10 @@ hr {
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
+.table>tbody>tr>td.light-background {
+  color: #344675 !important;
+}
+
 .table>tbody>tr>td .photo {
   height: 30px;
   width: 30px;
@@ -14264,6 +14291,11 @@ hr {
   color: rgba(255, 255, 255, 0.7);
 }
 
+
+.table>thead>tr>th.light-background {
+  color: #344675 !important;
+}
+
 .table .radio,
 .table .checkbox {
   margin-top: 0;
@@ -14294,6 +14326,15 @@ hr {
   border-color: rgba(255, 255, 255, 0.1);
   padding: 12px 7px;
   vertical-align: middle;
+}
+
+.table>thead>tr>th.light-background,
+.table>tbody>tr>th.light-background,
+.table>tfoot>tr>th.light-background,
+.table>thead>tr>td.light-background,
+.table>tbody>tr>td.light-background,
+.table>tfoot>tr>td.light-background {
+  border-color: #344675;
 }
 
 .table.table-shopping tbody tr:last-child td {
@@ -16397,7 +16438,7 @@ code {
 .form-control[readonly],
 fieldset[disabled] .form-control {
   background-color: #1d253b;
-  color: #344675;
+  color: #ffffff;
   cursor: not-allowed;
 }
 
@@ -17952,5 +17993,31 @@ th.ldap-group-action, td.ldap-group-action {
 	max-width: 300px;
 }
 
+
+thead.role-permission {
+        display: block;
+}
+
+tbody.role-permission {
+        display: block;
+        max-height: 787px;
+        overflow-y: auto;
+}
+
+th.role-name, td.role-name {
+        width: 380px;
+        max-width: 380px;
+}
+
+
+th.role-permissions, td.role-permissions {
+        width: 380px;
+        max-width: 380px;
+}
+
+th.role-permission-action, td.role-permission-action {
+        width: 400px;
+        max-width: 400px;
+}
 
 /*# sourceMappingURL=dashboard-free.css.map */

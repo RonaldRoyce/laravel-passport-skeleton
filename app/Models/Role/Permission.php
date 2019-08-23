@@ -9,11 +9,14 @@ class Permission extends Model
   	protected $table = 'permissions';
 	protected $primaryKey = 'permission_id';
 	protected $fillable = array('permission_id', 'name', 'page_id');
+	protected $hidden = array('granted');
+
 	public $timestamps = false;
 
 	private $permission_id = 0;
 	private $name = "";
 	private $page_id = "";
+	private $granted = false;
 
 	public function getId()
 	{
@@ -43,5 +46,15 @@ class Permission extends Model
 	public function setPageId($pageId)
 	{
 		$this->page_id = $pageId;
+	}
+
+	public function getGranted()
+	{
+		return $this->granted;
+	}
+
+	public function setGranted()
+	{
+		$this->granted = true;
 	}
 }

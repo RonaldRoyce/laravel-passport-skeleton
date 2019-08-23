@@ -11,13 +11,13 @@
                         {
                  	       var token = data['access_token'];
                                $.ajax({
-                                       url: groupAddUrl,
+                                       url: roleAddUrl,
                                        type:"GET",
                                        headers: {'Authorization': "Bearer " + token, "Accept" : "application/json", "Content-Type": "application/json" },
                                        data: {roleid: roleId, rolename: roleName},
                                        success: function(data, textStatus, jqXHR)
                                        {
-						window.location.href = '/admin/groups';
+						window.location.href = '/admin/roles';
                                                 return false;
                                        },
                                        error: function (jqXHR, textStatus, errorThrown)
@@ -35,9 +35,9 @@
                 return false;
     	});
 
-        $('#rename-group').on('click', function() {
-                var roleId = $('#delete-group').data('id');
-                var roleName = $('#delete-group').data('name');
+        $('#rename-role').on('click', function() {
+                var roleId = $('#delete-role').data('id');
+                var roleName = $('#delete-role').data('name');
 
                 $.ajax({
                         url: tokenUrl,
@@ -46,13 +46,13 @@
                         {
                                var token = data['access_token'];
                                $.ajax({
-                                       url: groupAddUrl,
+                                       url: roleAddUrl,
                                        type:"GET",
                                        headers: {'Authorization': "Bearer " + token, "Accept" : "application/json", "Content-Type": "application/json" },
                                        data: {roleid: roleId, rolename: roleName},
                                        success: function(data, textStatus, jqXHR)
                                        {
-                                                window.location.href = '/admin/groups';
+                                                window.location.href = '/admin/roles';
                                                 return false;
                                        },
                                        error: function (jqXHR, textStatus, errorThrown)
@@ -70,14 +70,14 @@
                 return false;
         });
 
-        $('#delete-group').on('click', function() {
-                var roleName = $('#delete-group').data('name');
+        $('#delete-role').on('click', function() {
+                var roleName = $('#delete-role').data('name');
 
 		$('#role-name').html(roleName);
 		
-		$('#deleteGroupModal').modal('show');
+		$('#deleteRoleModal').modal('show');
 
-		$('#execute-delete-group-btn').on('click', function() {
+		$('#execute-delete-role-btn').on('click', function() {
                 	$.ajax({
                         	url: tokenUrl,
                         	type:"GET",
@@ -85,13 +85,13 @@
                         	{
                         	       	var token = data['access_token'];
                                		$.ajax({
-                                       		url: groupDeleteUrl,
+                                       		url: roleDeleteUrl,
                                        		type:"GET",
                                        		headers: {'Authorization': "Bearer " + token, "Accept" : "application/json", "Content-Type": "application/json" },
                                        		data: {rolename: roleName},
                                        		success: function(data, textStatus, jqXHR)
                                        		{		
-                                                	window.location.href = '/admin/groups';
+                                                	window.location.href = '/admin/roles';
                                                 	return false;
                                        		},
                                        		error: function (jqXHR, textStatus, errorThrown)
