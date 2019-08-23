@@ -28,11 +28,11 @@
 							td.style.width = "20px";
 							if (p.granted)
 							{
-								td.innerHTML = '<input type="checkbox" id="checkbox-' + p.permission_id + '" checked />';
+								td.innerHTML = '<input type="checkbox" data-id="' + p.permission_id + '" checked />';
 							}
 							else
 							{
-								td.innerHTML = '<input type="checkbox" id="checkbox-' + p.permission_id + '" />';
+								td.innerHTML = '<input type="checkbox" data-id="' + p.permission_id + '" />';
 							}
 
 							tr.appendChild(td);
@@ -65,8 +65,20 @@
 	});
 
 	$('#addrolepermission-btn').on('click', function() {
-		var roleId = $('#roleid').val();
-                var roleName = $('#rolename').val();
+		var roleId = $('#add-role-permissions-id').val();
+                var roleName = $('#add-role-permissions-name').val();
+		var permissions = [];
+
+		$('#permissions-table-body td input').each(function(e) {
+			var o = $(this);
+
+			if (o[0].checked)
+			{
+				var permission = o.data('id');
+
+				permissions.push(permission);
+			}
+		});
 
                 $.ajax({
                         url: tokenUrl,
@@ -75,10 +87,10 @@
                         {
                  	       var token = data['access_token'];
                                $.ajax({
-                                       url: roleAddUrl,
-                                       type:"GET",
+                                       url: rolePermissionsAddUrl,
+                                       type:"POST",
                                        headers: {'Authorization': "Bearer " + token, "Accept" : "application/json", "Content-Type": "application/json" },
-                                       data: {roleid: roleId, rolename: roleName},
+                                       data: {roleid: roleId, permissions: permissions},
                                        success: function(data, textStatus, jqXHR)
                                        {
 						window.location.href = '/admin/roles';

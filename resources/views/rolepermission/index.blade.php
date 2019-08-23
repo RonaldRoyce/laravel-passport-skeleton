@@ -81,7 +81,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="addrole-btn" type="button" class="btn btn-primary">Save changes</button>
+        <button id="addrolepermission-btn" type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -113,7 +113,7 @@
 @push('view-scripts')
 <script style="text/javascript">
 	var tokenUrl = "<?php echo env('APP_URL', 'http://localhost') . '/token' ?>";
-	var roleAddUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/roles/add' ?>";
+	var rolePermissionsAddUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/rolepermission/add' ?>";
 	var roleDeleteUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/roles/delete' ?>";
 	var rolePermissionsGetUrl = "<?php echo env('APP_URL', 'http://localhost') . '/api/rolepermission/get' ?>";
 </script>

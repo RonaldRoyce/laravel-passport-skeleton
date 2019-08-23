@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Adldap\Laravel\Facades\Adldap;
 
@@ -143,5 +144,27 @@ class RoleApiController extends Controller
 	return $data;
     }
 
+    public function addRolePermissions(Request $request)
+    {
+	$roleId = $request->all()['roleid'];
+
+	$permissions = $request->all()['permissions'];
+
+        DB::transaction(function() use ($question, $questionCategory) {
+		RolePermission::where('role_id', '=', $roleId)->delete();
+
+		foreach ($permissions as $permissionId)
+		{
+		        $rolePermissions = new RolePermission();
+
+		        $rolePermissions->setRoleId($roleId);
+			$rolePermissions->setPermissionId($permissionId);
+
+		        $rolePermissions->save();
+		}
+        });
+
+	return array("success" => true, "message" => "");
+    }
 }
 
