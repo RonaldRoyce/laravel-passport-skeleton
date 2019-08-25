@@ -26,5 +26,5 @@ Route::get('oauth/token', 'AuthController@auth');
 Route::middleware('client_credentials')->get('/role/add', 'Api\RoleApiController@create')->name('rolecreate');
 Route::middleware('client_credentials')->get('/role/delete', 'Api\RoleApiController@delete')->name('roledelete');
 Route::middleware('client_credentials')->get('/rolepermission/get', 'Api\RoleApiController@getRolePermissions')->name('rolepermissionget');
-Route::middleware('client_credentials')->post('/rolepermission/add', 'Api\RoleApiController@addRolePermissions')->name('rolepermissionadd');
+Route::middleware('client_credentials')->get('/rolepermission/add', 'Api\RoleApiController@addRolePermissions')->name('rolepermissionadd');
 

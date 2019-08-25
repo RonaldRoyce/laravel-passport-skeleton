@@ -12,6 +12,22 @@
 			</div>
 		</div>
                 <div class="card-body">
+                        <table class="table table-striped table-bordered">
+                                <thead class="thead-light role-permission">
+                                        <tr>
+                                                <th scope="col" class="role-permissions">Logged In Permission</th>
+                                        </tr>
+                                </thead>
+                                <tbody class="role-permission">
+                                        @foreach (Auth::user()->role->permissions as $permission)
+                                                <tr>
+                                                        <td class="role-name">{{$permission->permission->name}}</td>
+                                                </tr>
+                                        @endforeach
+                                </tbody>
+                        </table>
+
+
 			<table class="table table-striped table-bordered">
 				<thead class="thead-light role-permission">
 					<tr>
@@ -26,11 +42,7 @@
 							<td class="role-name">{{$role["name"]}}</td>
 							<td class="role-permissions">{{$role["permissions"]}}</td>
 							<td class="action-btns role-permission-action">
-								<button id="show-add-rolepermission-btn" class="btn btn-info" data-name="{{$role["name"]}}" data-id="{{$role["role_id"]}}">Add</button>
-								&nbsp;
-								<button type="button" class="btn btn-primary" id="edit-rolepermission" data-name="{{$role["name"]}}" data-id="{{$role["role_id"]}}">Edit</button>
-								&nbsp;
-								<button type="button" id="delete-group" class="btn btn-danger" data-name="{{$role["name"]}}" data-id="{{$role["role_id"]}}">Delete</button></td>
+								<button type="button" class="btn btn-primary" id="edit-rolepermission-btn" data-name="{{$role["name"]}}" data-id="{{$role["role_id"]}}">Edit</button>
 						</tr>
 					@endforeach
 				</tbody>
@@ -47,7 +59,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addRoleModalLabel">Add Role Permissions</h5>
+        <h5 class="modal-title" id="addRoleModalLabel">Edit Role Permissions</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -81,7 +93,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="addrolepermission-btn" type="button" class="btn btn-primary">Save changes</button>
+        <button id="saverolepermission-btn" type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

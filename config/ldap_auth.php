@@ -267,7 +267,7 @@ return [
     |
     */
 
-    'login_fallback' => env('LDAP_LOGIN_FALLBACK', false),
+    'login_fallback' => env('LDAP_LOGIN_FALLBACK', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -293,7 +293,8 @@ return [
 
         'name' => 'cn',
 
-	'group_id' => 'businesscategory',
+//	'group_id' => 'businesscategory',
+	'role_id' => 'gidnumber',
     ],
 
     /*

@@ -49,8 +49,6 @@ Route::middleware('auth')->get('/callback', function (Request $request) {
 */
 
 Route::middleware('auth')->get('/token', function (Request $request) {
-        Log::debug("At top of token");
-
         $client_id = env('PASSPORT_CLIENT_ID');
         $client_secret = env('PASSPORT_SECRET');
 
@@ -66,8 +64,6 @@ Route::middleware('auth')->get('/token', function (Request $request) {
         );
 
         $instance = Route::dispatch($tokenRequest);
-
-        Log::debug("At bottom of token");
 
         return json_decode($instance->getContent(), true);
 });

@@ -1,12 +1,13 @@
  $(document).ready(function() {
-	$('#show-add-rolepermission-btn').on('click', function() {
+	$('#edit-rolepermission-btn').on('click', function() {
                 $.ajax({
                         url: tokenUrl,
                         type:"GET",
+			headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
                         success: function(data, textStatus, jqXHR)
                         {
                                var token = data['access_token'];
-				var roleId = $('#show-add-rolepermission-btn').data('id');
+				var roleId = $('#edit-rolepermission-btn').data('id');
                                $.ajax({
                                        url: rolePermissionsGetUrl,
                                        type:"GET",
@@ -64,7 +65,7 @@
                 });
 	});
 
-	$('#addrolepermission-btn').on('click', function() {
+	$('#saverolepermission-btn').on('click', function() {
 		var roleId = $('#add-role-permissions-id').val();
                 var roleName = $('#add-role-permissions-name').val();
 		var permissions = [];
@@ -86,14 +87,16 @@
                         success: function(data, textStatus, jqXHR)
                         {
                  	       var token = data['access_token'];
+				var postData = {roleid: roleId, permissions: permissions};
+
                                $.ajax({
                                        url: rolePermissionsAddUrl,
-                                       type:"POST",
+                                       type:"GET",
                                        headers: {'Authorization': "Bearer " + token, "Accept" : "application/json", "Content-Type": "application/json" },
-                                       data: {roleid: roleId, permissions: permissions},
+                                       data: postData,
                                        success: function(data, textStatus, jqXHR)
                                        {
-						window.location.href = '/admin/roles';
+						window.location.href = '/admin/rolepermissions';
                                                 return false;
                                        },
                                        error: function (jqXHR, textStatus, errorThrown)

@@ -99,13 +99,15 @@ class LoginController extends Controller
                 $user = new \App\User();
                 $user->username = $username;
                 $user->password = '';
+		$user->created_at = $user->updated_at = date("Y-m-d H:i:s");
 
                 // you can skip this if there are no extra attributes to read from the LDAP server
                 // or you can move it below this if(!$user) block if you want to keep the user always
                 // in sync with the LDAP server 
                 $sync_attrs = $this->retrieveSyncAttributes($username);
                 foreach ($sync_attrs as $field => $value) {
-                    $user->$field = $value !== null ? $value : '';
+            		$value = ($value !== null ? $value : '');
+		        $user->$field = $value;
                 }
             }
 

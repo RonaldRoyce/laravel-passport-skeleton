@@ -176,6 +176,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Laravel\Passport\PassportServiceProvider::class,
+	Adldap\Laravel\AdldapServiceProvider::class,
+
     ],
 
     /*

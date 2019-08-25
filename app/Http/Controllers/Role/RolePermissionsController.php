@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Role;
 
 use Illuminate\Http\Request;
 
+use App\Models\Role\Role;
 use App\Models\Role\RolePermission;
 use App\Http\Controllers\Controller;
 
@@ -26,37 +27,44 @@ class RolePermissionsController extends Controller
      */
     public function index()
     {
-	$rolePermissions = RolePermission::all();
-
 	$rolePermissionsList = array();
 
 	$rolesDefined = array();
 
-	foreach ($rolePermissions as $rolePermission)
+	$rolesDefined = Role::all();
+
+        $rolesPermissionsList = array();
+        $rolesDefine = array();
+
+	foreach ($rolesDefined as $definedRole)
 	{
-		$role = $rolePermission->role;
-		$permissions = $rolePermission->permissions;
+		$roleId = $definedRole->role_id;
+		$roleName = $definedRole->name;
+
+		$rolePermissions = RolePermission::where('role_id', '=', $roleId)->get();
+
+		if (count($rolePermissions) == 0)
+		{
+			$rolePermissionsList[] = array("role_id" => $roleId, "name" => $roleName, "permissions" => '');
+			continue;
+		}
 
 		$permissionNames = "";
 
-		foreach ($permissions as $permission)
+		foreach ($rolePermissions as $rolePermission)
 		{
+			$role = $rolePermission->role;
+			$permission = $rolePermission->permission;
+
 			if ($permissionNames != "")
 			{
 				$permissionNames .= ", ";
 			}
-
+		
 			$permissionNames .= $permission->name;
 		}
-			
-		if (!array_key_exists($role->name, $rolesDefined))
-		{
-			$rolePermissionsList[] = array("role_id" => $role->role_id, "name" => $role->name, "permissions" => $permissionNames);
-			$rolesDefined[$role->name] = count($rolePermissionsList) - 1;
-		}
-		else {
-			$rolePermissionsList[$rolesDefined[$role->name]]["permissions"] .= ", " . $permissionNames;
-		}
+	
+		$rolePermissionsList[] = array("role_id" => $roleId, "name" => $roleName, "permissions" => $permissionNames);
 	}
 
         return view('rolepermission.index', ["rolepermissions" => (object)$rolePermissionsList]);

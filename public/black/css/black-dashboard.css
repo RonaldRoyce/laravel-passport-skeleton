@@ -1763,8 +1763,8 @@ pre code {
 }
 
 .table .thead-light th {
-  color: #525f7f;
-  background-color: #e9ecef;
+  color: #ffffff;
+  background-color: #3b8ee0;
   border-color: #e3e3e3;
 }
 
@@ -1856,6 +1856,22 @@ pre code {
 }
 
 .form-control {
+  display: block;
+  width: 100%;
+  height: calc(2.25rem + 2px);
+  padding: 0.5rem 0.7rem;
+  font-size: 0.875rem;
+  line-height: 1.428571;
+  color: rgba(0, 0, 0, 0.8);
+  background-color: #ffffff;
+  background-clip: padding-box;
+  border: 1px solid #cad1d7;
+  border-radius: 0.25rem;
+  box-shadow: none;
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.form-control-black {
   display: block;
   width: 100%;
   height: calc(2.25rem + 2px);
@@ -14020,7 +14036,7 @@ textarea {
 .card h5,
 .card h6,
 .card p {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(0, 0, 0, 0.8);
 }
 
 h1,
@@ -14196,7 +14212,7 @@ hr {
 }
 
 .table>tbody>tr>td {
-  color: rgba(255, 255, 255, 0.7) !important;
+  color: rgba(0, 0, 0, 0.7) !important;
 }
 
 .table>tbody>tr>td.light-background {
@@ -16241,13 +16257,6 @@ code {
   padding: 10px 18px 10px 0;
 }
 
-.form-group .input-group-prepend .input-group-text,
-.form-group .input-group-append .input-group-text,
-.input-group .input-group-prepend .input-group-text,
-.input-group .input-group-append .input-group-text {
-  padding: 10px 0 10px 18px;
-}
-
 .form-group .input-group-prepend .input-group-text+.form-control,
 .form-group .input-group-prepend .input-group-text~.form-control,
 .form-group .input-group-append .input-group-text+.form-control,
@@ -17304,7 +17313,7 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .card {
-  background: #27293d;
+  background: #d5d9f5;
   border: 0;
   position: relative;
   width: 100%;
@@ -17313,7 +17322,7 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .card label {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgb(0, 0, 0);
 }
 
 .card .card-title {
@@ -18005,19 +18014,19 @@ tbody.role-permission {
 }
 
 th.role-name, td.role-name {
-        width: 380px;
-        max-width: 380px;
+        width: 300px;
+        max-width: 300px;
 }
 
 
 th.role-permissions, td.role-permissions {
-        width: 380px;
-        max-width: 380px;
+        width: 420px;
+        max-width: 420px;
 }
 
 th.role-permission-action, td.role-permission-action {
-        width: 400px;
-        max-width: 400px;
+        width: 165px;
+        max-width: 165px;
 }
 
 /*# sourceMappingURL=dashboard-free.css.map */

@@ -128,7 +128,7 @@ return [
                 |
                 */
 
-                'account_suffix' => env('LDAP_ACCOUNT_SUFFIX', ',dc=trads,dc=us'),
+                'account_suffix' => env('LDAP_ACCOUNT_SUFFIX', ',dc=royce,dc=com'),
 
                 /*
                 |--------------------------------------------------------------------------
@@ -184,7 +184,7 @@ return [
                 |
                 */
 
-                'base_dn' => env('LDAP_BASE_DN', 'dc=trads,dc=us'),
+                'base_dn' => env('LDAP_BASE_DN', 'dc=royce,dc=com'),
 
                 /*
                 |--------------------------------------------------------------------------
