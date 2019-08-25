@@ -11238,14 +11238,14 @@ fieldset[disabled] .btn-warning.active {
 }
 
 .btn-danger {
-  background: #fd5d93;
-  background-image: -webkit-linear-gradient(to bottom left, #fd5d93, #ec250d, #fd5d93);
-  background-image: -o-linear-gradient(to bottom left, #fd5d93, #ec250d, #fd5d93);
-  background-image: -moz-linear-gradient(to bottom left, #fd5d93, #ec250d, #fd5d93);
-  background-image: linear-gradient(to bottom left, #fd5d93, #ec250d, #fd5d93);
+  background: #ff0000;
+  background-image: -webkit-linear-gradient(to bottom left, #f3568b, #ff0000, #fd5d93);
+  background-image: -o-linear-gradient(to bottom left, #f3568b, #ff0000, #fd5d93);
+  background-image: -moz-linear-gradient(to bottom left, #f3568b, #ff0000, #fd5d93);
+  background-image: linear-gradient(to bottom left, #f3568b, #ff0000, #fd5d93);
   background-size: 210% 210%;
   background-position: top right;
-  background-color: #fd5d93;
+  background-color: #ff0000;
   transition: all 0.15s ease;
   box-shadow: none;
   color: #ffffff;
@@ -13459,7 +13459,7 @@ img {
 }
 
 .navbar.navbar-transparent {
-  background: transparent !important;
+  background: #d6c758 !important;
 }
 
 .navbar.bg-white .navbar-nav .search-bar.input-group i {
@@ -13520,11 +13520,10 @@ img {
   position: fixed;
   padding-top: .3125rem;
   padding-bottom: .3125rem;
-  color: #ffffff;
+  color: #1e1e28; 
   margin-left: 17px;
   margin-top: 3px;
-  text-transform: uppercase;
-  font-size: 1rem;
+  font-size: 2rem; 
 }
 
 .navbar .navbar-toggle button:focus,
@@ -17557,7 +17556,7 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .card label {
-  font-size: 0.75rem;
+  font-size: 1.0rem;
   margin-bottom: 5px;
 }
 
@@ -18011,6 +18010,7 @@ tbody.role-permission {
         display: block;
         max-height: 787px;
         overflow-y: auto;
+        background-color: #ffffff;
 }
 
 th.role-name, td.role-name {
@@ -18027,6 +18027,10 @@ th.role-permissions, td.role-permissions {
 th.role-permission-action, td.role-permission-action {
         width: 165px;
         max-width: 165px;
+}
+
+.info-text {
+     color: #3b8ee0;
 }
 
 /*# sourceMappingURL=dashboard-free.css.map */

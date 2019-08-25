@@ -1,5 +1,7 @@
  $(document).ready(function() {
-
+     var roleName = "";
+     var roleId = "";
+     
 	$('#addrole-btn').on('click', function() {
 		var roleId = $('#roleid').val();
                 var roleName = $('#rolename').val();
@@ -36,8 +38,8 @@
     	});
 
         $('#rename-role').on('click', function() {
-                var roleId = $('#delete-role').data('id');
-                var roleName = $('#delete-role').data('name');
+                roleId = $('#delete-role').data('id');
+                roleName = $('#delete-role').data('name');
 
                 $.ajax({
                         url: tokenUrl,
@@ -70,9 +72,10 @@
                 return false;
         });
 
-        $('#delete-role').on('click', function() {
-                var roleName = $('#delete-role').data('name');
-
+        $('.delete-role-btn').on('click', function() {
+               globalRoleName = this.attributes['data-name'].value;
+               globalRoleId = this.attributes['data-id'].value;
+               
 		$('#role-name').html(roleName);
 		
 		$('#deleteRoleModal').modal('show');
@@ -88,7 +91,7 @@
                                        		url: roleDeleteUrl,
                                        		type:"GET",
                                        		headers: {'Authorization': "Bearer " + token, "Accept" : "application/json", "Content-Type": "application/json" },
-                                       		data: {rolename: roleName},
+                                       		data: {roleid: globalRoleId, rolename: globalRoleName},
                                        		success: function(data, textStatus, jqXHR)
                                        		{		
                                                 	window.location.href = '/admin/roles';

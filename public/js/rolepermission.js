@@ -1,68 +1,69 @@
  $(document).ready(function() {
-	$('#edit-rolepermission-btn').on('click', function() {
-                $.ajax({
-                        url: tokenUrl,
-                        type:"GET",
-			headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
-                        success: function(data, textStatus, jqXHR)
-                        {
-                               var token = data['access_token'];
-				var roleId = $('#edit-rolepermission-btn').data('id');
-                               $.ajax({
-                                       url: rolePermissionsGetUrl,
-                                       type:"GET",
-                                       headers: {'Authorization': "Bearer " + token, "Accept" : "application/json", "Content-Type": "application/json" },
-                                       data: {roleid: roleId},
-                                       success: function(data, textStatus, jqXHR)
-                                       {
-			                	$('#add-role-permissions-id').val(data.role_id);
-                				$('#add-role-permissions-name').val(data.role_name);
+     $('.edit-rolepermission-btn').on('click', function() {
+          var roleId = this.attributes['data-id'].value;
 
-						$('#permissions-table-body').children().remove();
+          $.ajax({
+               url: tokenUrl,
+               type:"GET",
+               headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+               success: function(data, textStatus, jqXHR)
+               {
+                         var token = data['access_token'];                     
+                         $.ajax({
+                              url: rolePermissionsGetUrl,
+                              type:"GET",
+                              headers: {'Authorization': "Bearer " + token, "Accept" : "application/json", "Content-Type": "application/json" },
+                              data: {roleid: roleId},
+                              success: function(data, textStatus, jqXHR)
+                              {
+                         $('#add-role-permissions-id').val(data.role_id);
+                         $('#add-role-permissions-name').val(data.role_name);
 
-						data.permissions.forEach(function(p) {
-							var tr = document.createElement('tr');
+                    $('#permissions-table-body').children().remove();
 
-							var td = document.createElement('td');
+                    data.permissions.forEach(function(p) {
+                         var tr = document.createElement('tr');
 
-							td.className = "light-background";
-							td.style.width = "20px";
-							if (p.granted)
-							{
-								td.innerHTML = '<input type="checkbox" data-id="' + p.permission_id + '" checked />';
-							}
-							else
-							{
-								td.innerHTML = '<input type="checkbox" data-id="' + p.permission_id + '" />';
-							}
+                         var td = document.createElement('td');
 
-							tr.appendChild(td);
-
-							td = document.createElement('td');
-
-							td.className = "light-background";
-                                                        td.style.width = "400px";
-							td.innerText = p.name;
-
-							tr.appendChild(td);
-
-							document.getElementById('permissions-table-body').appendChild(tr);
-						});
-
-                				$('#addRolePermissionsModal').modal('show') ;
-                                                return false;
-                                       },
-                                       error: function (jqXHR, textStatus, errorThrown)
-                                       {
-                                                return false;
-                                       }
-                                });
-                         },
-                         error: function (jqXHR, textStatus, errorThrown)
+                         td.className = "light-background";
+                         td.style.width = "20px";
+                         if (p.granted)
                          {
-                                 return false;
+                              td.innerHTML = '<input type="checkbox" data-id="' + p.permission_id + '" checked />';
                          }
-                });
+                         else
+                         {
+                              td.innerHTML = '<input type="checkbox" data-id="' + p.permission_id + '" />';
+                         }
+
+                         tr.appendChild(td);
+
+                         td = document.createElement('td');
+
+                         td.className = "light-background";
+                                                  td.style.width = "400px";
+                         td.innerText = p.name;
+
+                         tr.appendChild(td);
+
+                         document.getElementById('permissions-table-body').appendChild(tr);
+                    });
+
+                         $('#addRolePermissionsModal').modal('show') ;
+                                        return false;
+                              },
+                              error: function (jqXHR, textStatus, errorThrown)
+                              {
+                                        return false;
+                              }
+                         });
+               },
+               error: function (jqXHR, textStatus, errorThrown)
+               {
+                         return false;
+               }
+          });
 	});
 
 	$('#saverolepermission-btn').on('click', function() {

@@ -65,7 +65,7 @@
                             </a>
                         </li>
                         <li>
-			    <a href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i><p>{{ __('Log out') }}</p></a>
+			    <a href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();"><i class="fa fa-sign-out-alt fa-black" style="color: black;"></i><p>{{ __('Log out') }}</p></a>
                         </li>
                     </ul>
                 </div>

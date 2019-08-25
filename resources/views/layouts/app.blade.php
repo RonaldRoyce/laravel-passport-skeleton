@@ -20,11 +20,15 @@
         <link href="{{ asset('black') }}/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
         <link href="{{ asset('black') }}/css/theme.css" rel="stylesheet" />
 
+	<link href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" rel="stylesheet" />
+<!--
 	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+-->
 
     </head>
     <body class="{{ $class ?? '' }}">
-        @auth()
+        @auth() 
+
             <div class="wrapper">
                     @include('layouts.navbars.sidebar')
                 <div class="main-panel">

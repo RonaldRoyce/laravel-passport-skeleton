@@ -47,6 +47,13 @@ class RoleApiController extends Controller {
 		{
 			$group->create();
 
+               $role = new Role();
+
+               $role->role_id = $roleId;
+               $role->name =  $roleName;
+
+               $role->save();
+
 			$group = null;
 
 			return array("success" => true, "message" => "");
@@ -57,6 +64,7 @@ class RoleApiController extends Controller {
 	}
 	public function delete(Request $request) {
 		$roleName = $request->all()['rolename'];
+          $roleId = $request->all('roleid');
 
 		$groups = $this->_adldap->search()->groups()->get();
 
@@ -66,7 +74,10 @@ class RoleApiController extends Controller {
 			$groupName = $attrs['cn'][0];
 
 			if ($groupName == $roleName) {
-				$group->delete();
+                    $group->delete();
+                    
+                    Role::where('role_id', '=', $roleId)->delete();
+                    
 				return array("success" => true, "message" => "Group has been deleted");
 			}
 		}

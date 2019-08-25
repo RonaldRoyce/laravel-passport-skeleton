@@ -12,22 +12,6 @@
 			</div>
 		</div>
                 <div class="card-body">
-                        <table class="table table-striped table-bordered">
-                                <thead class="thead-light role-permission">
-                                        <tr>
-                                                <th scope="col" class="role-permissions">Logged In Permission</th>
-                                        </tr>
-                                </thead>
-                                <tbody class="role-permission">
-                                        @foreach (Auth::user()->role->permissions as $permission)
-                                                <tr>
-                                                        <td class="role-name">{{$permission->permission->name}}</td>
-                                                </tr>
-                                        @endforeach
-                                </tbody>
-                        </table>
-
-
 			<table class="table table-striped table-bordered">
 				<thead class="thead-light role-permission">
 					<tr>
@@ -42,7 +26,7 @@
 							<td class="role-name">{{$role["name"]}}</td>
 							<td class="role-permissions">{{$role["permissions"]}}</td>
 							<td class="action-btns role-permission-action">
-								<button type="button" class="btn btn-primary" id="edit-rolepermission-btn" data-name="{{$role["name"]}}" data-id="{{$role["role_id"]}}">Edit</button>
+								<button type="button" class="btn btn-primary edit-rolepermission-btn" data-name="{{$role["name"]}}" data-id="{{$role["role_id"]}}">Edit</button>
 						</tr>
 					@endforeach
 				</tbody>

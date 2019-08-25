@@ -1,4 +1,4 @@
-@extends('layouts.app', ['pageSlug' => 'roleindex', 'titlePage' => __('User Roles'), 'sidebarType' => 'admin'])
+@extends('layouts.app', ['pageSlug' => 'role-index', 'titlePage' => __('User Roles'), 'sidebarType' => 'admin'])
 
 @section('content')
 <div class="container">
@@ -8,7 +8,7 @@
                 <div class="card-header card-header-slim">
 			<div>
 				<div style="float: left;"><h3 class="slim">User Roles</h3></div>
-				<div class="slim" style="float: right;"><button class="btn btn-warning" data-toggle="modal" data-target="#addRoleModal">Add Role</button></div>
+				<div class="slim" style="float: right;"><button class="btn btn-info" data-toggle="modal" data-target="#addRoleModal">Add Role</button></div>
 				<div class="clear: both;"></div>
 			</div>
 		</div>
@@ -24,7 +24,7 @@
 					@foreach ($roles as $role)
 						<tr>
 							<td class="ldap-group-name">{{$role->name}}</td>
-							<td class="action-btns ldap-group-action"><button type="button" class="btn btn-primary" id="rename-role" data-name="{{$role->name}}" data-id="{{$role->id}}">Rename</button>&nbsp;<button type="button" id="delete-role" class="btn btn-danger" data-name="{{$role->name}}" data-id="{{$role->id}}">Delete</button></td>
+							<td class="action-btns ldap-group-action"><button type="button" class="btn btn-primary" id="rename-role" data-name="{{$role->name}}" data-id="{{$role->id}}">Rename</button>&nbsp;<button type="button" class="btn btn-danger delete-role-btn" data-name="{{$role->name}}" data-id="{{$role->id}}">Delete</button></td>
 						</tr>
 					@endforeach
 				</tbody>
@@ -66,6 +66,7 @@
 <div class="modal fade" id="deleteRoleModal" tabindex="-1" role="dialog" aria-labelledby="addRoleLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+      <input type="hidden" id="delete-roleid" name="delete-roleid" />
       <div class="modal-header">
         <h2 class="modal-title" id="addRoleModalLabel">Delete User Role</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -90,7 +91,9 @@
 <script style="text/javascript">
 	var tokenUrl = "<?php echo env('APP_URL', 'http://localhost') . '/token' ?>";
 	var roleAddUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/role/add' ?>";
-	var roleDeleteUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/role/delete' ?>";
+     var roleDeleteUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/role/delete' ?>";
+     var globalRoleId = "";
+     var globalRoleName = "";
 </script>
 
 <script style="text/javascript" src="/js/role.js"></script>

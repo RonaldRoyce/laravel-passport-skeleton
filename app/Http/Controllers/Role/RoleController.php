@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Adldap\Laravel\Facades\Adldap;
+use Illuminate\Support\Facades\Auth;
 
 use Adldap\AdldapInterface;
 
@@ -31,6 +32,13 @@ class RoleController extends Controller
      */
     public function index()
     {
+         $user = Auth::user();
+
+          if ($user->role == null)
+          {
+               return redirect('/notauthorized');
+          }         
+
 	$groups = Adldap::search()->groups()->get();
 
 	$allGroups = array();

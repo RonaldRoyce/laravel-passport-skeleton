@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\Helpers\ConfigHelper;
 
 class HomeController extends Controller
 {
@@ -24,9 +25,15 @@ class HomeController extends Controller
      */
     public function index()
     {
+ 
 	$user = Auth::user();
 
-        $group = $user->group;
+     if ($user->role == null)
+     {
+          return redirect('/notauthorized');
+     }         
+
+     $group = $user->group;
 
         return view('dashboard', ["group" => $group]);
     }
