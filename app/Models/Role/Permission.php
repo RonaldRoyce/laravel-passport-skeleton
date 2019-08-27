@@ -16,7 +16,7 @@ class Permission extends Model
 	private $permission_id = 0;
 	private $name = "";
 	private $page_id = "";
-	private $granted = false;
+	public $granted = false;
 
 	public function getId()
 	{

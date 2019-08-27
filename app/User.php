@@ -50,4 +50,22 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\Role\Role', 'role_id', 'role_id');
     }
+
+    public function hasPermission($pageId)
+    {
+	if ($this->role->name == "Super User")
+	{
+		return true;
+	}
+
+	foreach ($this->role->permissions as $rolePermission)
+	{
+		if ($rolePermission->permission->page_id == $pageId)
+		{
+			return true;
+		}
+	}
+
+	return false;
+    }
 }

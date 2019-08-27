@@ -8,7 +8,8 @@ use App\Models\Role\Role;
 use App\Models\Role\RolePermission;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Adldap\Laravel\Facades\Adldap;
+use App\Helpers\LdapHelper;
+use App\Helpers\ConfigHelper;
 
 class RolePermissionsController extends Controller
 {
@@ -29,14 +30,19 @@ class RolePermissionsController extends Controller
      */
     public function index()
     {
-     $user = Auth::user();
+	$user = Auth::user();
 
-     if ($user->role == null)
-     {
-          return redirect('/notauthorized');
-     }         
+	if ($user->role == null)
+	{
+        	return redirect('/notauthorized');
+     	}	         
 
-     self::syncLDAPGroups();
+        $providerConfig = ConfigHelper::getAuthDriverProviderConfig();
+
+	if ($providerConfig->driver == "ldap")
+        {
+		LdapHelper::syncLDAPGroups();
+	}
 
 	$rolePermissionsList = array();
 
@@ -77,43 +83,5 @@ class RolePermissionsController extends Controller
 	}
 
         return view('rolepermission.index', ["rolepermissions" => (object)$rolePermissionsList]);
-    }
-
-    protected static function getAllLDAPGroups()
-    {
-        $groups = Adldap::search()->groups()->get();
-
-        $allGroups = array();
-
-        foreach ($groups as $group)
-        {
-                $attrs = $group->getAttributes();
-
-                $group = (object)array("id" => $attrs["gidnumber"][0], "name" => $group->getCommonName());
-
-                $allGroups[] = $group;
-        }
-
-	return $allGroups;
-    }
-
-    protected static function syncLDAPGroups()
-    {
-        $ldapRoles = self::getAllLDAPGroups();
-
-        foreach ($ldapRoles as $ldapRole)
-        {       
-                $role = Role::where('role_id', '=', $ldapRole->id)->get();
-
-		if (!$role || count($role) == 0)
-                {
-                        $newRole = new Role();
-
-                        $newRole->role_id = $ldapRole->id;
-                        $newRole->name = $ldapRole->name;
-
-                        $newRole->save();
-                }
-        }
     }
 }

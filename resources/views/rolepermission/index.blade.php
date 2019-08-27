@@ -2,6 +2,9 @@
 
 @section('content')
 <div class="container">
+    <div id="error-message-div" class="alert alert-danger" style="display: none;" role="alert">
+    </div>
+
     <div class="row justify-content-center">
         <div class="col-md-14">
             <div class="card">

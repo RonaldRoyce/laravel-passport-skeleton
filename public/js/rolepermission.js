@@ -1,4 +1,14 @@
  $(document).ready(function() {
+     function showPageError(msg)
+     {
+	$('#error-message-div').html(msg);
+        $('#eror-message-div').show();
+
+	setTimeout(function() {
+		$('#error-message-div').hide();
+	}, 5000);
+     }
+
      $('.edit-rolepermission-btn').on('click', function() {
           var roleId = this.attributes['data-id'].value;
 
@@ -16,41 +26,47 @@
                               data: {roleid: roleId},
                               success: function(data, textStatus, jqXHR)
                               {
-                         $('#add-role-permissions-id').val(data.role_id);
-                         $('#add-role-permissions-name').val(data.role_name);
+					if (!data.success)
+					{
+						showPageError(data.message);
+						return false;
+					}
 
-                    $('#permissions-table-body').children().remove();
+                         		$('#add-role-permissions-id').val(data.data.role_id);
+                         		$('#add-role-permissions-name').val(data.data.role_name);
 
-                    data.permissions.forEach(function(p) {
-                         var tr = document.createElement('tr');
+                    			$('#permissions-table-body').children().remove();
 
-                         var td = document.createElement('td');
+                    			data.data.permissions.forEach(function(p) {
+                         			var tr = document.createElement('tr');
 
-                         td.className = "light-background";
-                         td.style.width = "20px";
-                         if (p.granted)
-                         {
-                              td.innerHTML = '<input type="checkbox" data-id="' + p.permission_id + '" checked />';
-                         }
-                         else
-                         {
-                              td.innerHTML = '<input type="checkbox" data-id="' + p.permission_id + '" />';
-                         }
+                         			var td = document.createElement('td');
 
-                         tr.appendChild(td);
+                         			td.className = "light-background";
+                         			td.style.width = "20px";
+                         			if (p.granted)
+                         			{
+                              				td.innerHTML = '<input type="checkbox" data-id="' + p.permission_id + '" checked />';
+                         			}
+                         			else
+                         			{
+                              				td.innerHTML = '<input type="checkbox" data-id="' + p.permission_id + '" />';
+                         			}
 
-                         td = document.createElement('td');
+                         			tr.appendChild(td);
 
-                         td.className = "light-background";
-                                                  td.style.width = "400px";
-                         td.innerText = p.name;
+                         			td = document.createElement('td');
 
-                         tr.appendChild(td);
+                         			td.className = "light-background";
+                                                td.style.width = "400px";
+                         			td.innerText = p.name;
 
-                         document.getElementById('permissions-table-body').appendChild(tr);
-                    });
+                         			tr.appendChild(td);
 
-                         $('#addRolePermissionsModal').modal('show') ;
+                         			document.getElementById('permissions-table-body').appendChild(tr);
+                    			});
+
+                         		$('#addRolePermissionsModal').modal('show') ;
                                         return false;
                               },
                               error: function (jqXHR, textStatus, errorThrown)
@@ -97,6 +113,12 @@
                                        data: postData,
                                        success: function(data, textStatus, jqXHR)
                                        {
+						if (!data.success)
+						{
+							showPageError(data.message);
+							return;
+						}
+
 						window.location.href = '/admin/rolepermissions';
                                                 return false;
                                        },
@@ -114,80 +136,6 @@
 
                 return false;
     	});
-
-        $('#rename-role').on('click', function() {
-                var roleId = $('#delete-role').data('id');
-                var roleName = $('#delete-role').data('name');
-
-                $.ajax({
-                        url: tokenUrl,
-                        type:"GET",
-                        success: function(data, textStatus, jqXHR)
-                        {
-                               var token = data['access_token'];
-                               $.ajax({
-                                       url: roleAddUrl,
-                                       type:"GET",
-                                       headers: {'Authorization': "Bearer " + token, "Accept" : "application/json", "Content-Type": "application/json" },
-                                       data: {roleid: roleId, rolename: roleName},
-                                       success: function(data, textStatus, jqXHR)
-                                       {
-                                                window.location.href = '/admin/roles';
-                                                return false;
-                                       },
-                                       error: function (jqXHR, textStatus, errorThrown)
-                                       {
-                                                return false;
-                                       }
-                                });
-                         },
-                         error: function (jqXHR, textStatus, errorThrown)
-                         {
-                                 return false;
-                         }
-                });
-
-                return false;
-        });
-
-        $('#delete-role').on('click', function() {
-                var roleName = $('#delete-role').data('name');
-
-		$('#role-name').html(roleName);
-		
-		$('#deleteRoleModal').modal('show');
-
-		$('#execute-delete-role-btn').on('click', function() {
-                	$.ajax({
-                        	url: tokenUrl,
-                        	type:"GET",
-                        	success: function(data, textStatus, jqXHR)
-                        	{
-                        	       	var token = data['access_token'];
-                               		$.ajax({
-                                       		url: roleDeleteUrl,
-                                       		type:"GET",
-                                       		headers: {'Authorization': "Bearer " + token, "Accept" : "application/json", "Content-Type": "application/json" },
-                                       		data: {rolename: roleName},
-                                       		success: function(data, textStatus, jqXHR)
-                                       		{		
-                                                	window.location.href = '/admin/roles';
-                                                	return false;
-                                       		},
-                                       		error: function (jqXHR, textStatus, errorThrown)
-                                       		{
-                                                	return false;
-                                       		}
-                                	});
-                         	},
-                         	error: function (jqXHR, textStatus, errorThrown)
-                         	{
-                                	return false;
-                         	}
-                	});
-        	});
-	});
-
 });
 
 

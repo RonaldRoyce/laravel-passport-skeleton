@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Role;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Adldap\Laravel\Facades\Adldap;
 use Illuminate\Support\Facades\Auth;
-
-use Adldap\AdldapInterface;
+use App\Helpers\ConfigHelper;
+use App\Helpers\LdapHelper;
+use App\Models\Role\Role;
 
 class RoleController extends Controller
 {
@@ -18,10 +18,8 @@ class RoleController extends Controller
      *
      * @return void
      */
-    public function __construct(AdldapInterface $adldap)
+    public function __construct()
     {
-	$this->_adldap = $adldap;
-
         $this->middleware('auth');
     }
 
@@ -32,30 +30,28 @@ class RoleController extends Controller
      */
     public function index()
     {
-         $user = Auth::user();
+        $user = Auth::user();
 
-          if ($user->role == null)
-          {
+        if ($user->role == null)
+        {
                return redirect('/notauthorized');
-          }         
+        }         
 
-	$groups = Adldap::search()->groups()->get();
+        $providerConfig = ConfigHelper::getAuthDriverProviderConfig();
 
-	$allGroups = array();
+        if ($providerConfig->driver == "ldap")
+        {
+                LdapHelper::syncLDAPGroups();
+        }
 
-	foreach ($groups as $group)
+	$dbRoles = Role::all()->sortBy('name');
+
+	foreach ($dbRoles as $role)
 	{
-        	$attrs = $group->getAttributes();
-
-		$group = (object)array("id" => $attrs["gidnumber"][0], "name" => $group->getCommonName());
+		$group = (object)array("id" => $role->role_id, "name" => $role->name);
 
 		$allGroups[] = $group;
 	}
-
-	$names = array_column($allGroups, "name");
-	$ids = array_column($allGroups, "id");
-
-	array_multisort($names, SORT_ASC, $ids, SORT_ASC, $allGroups);
 
         return view('role.index', ["roles" => $allGroups]);
     }
