@@ -4,10 +4,29 @@ namespace App\Helpers;
 use Adldap\Laravel\Facades\Adldap;
 use App\Helpers\ConfigHelper;
 use App\Models\Role\Role;
+use \Exception;
 
 class LdapHelper {
+    public static function get($dn, $operator, $value)
+    {
+	return Adldap::search()->where($dn, $operator, $value)->get();
+    }
 
-    protected static function getAllLDAPGroups()
+    public static function createOu($dn)
+    {
+	$ou = Adldap::make()->ou(["dn" => 'ou=' . $dn . ','. env('LDAP_BASE_DN') ]);     
+
+	$ou->save();
+
+	return $ou; 
+    }
+
+    public static function getLDAPGroup($groupName)
+    {
+	return Adldap::search()->groups()->where('cn', '=', $groupName)->get()->first();
+    }
+
+    public static function getAllLDAPGroups()
     {
         $providerConfig = ConfigHelper::getAuthDriverProviderConfig();
 
@@ -82,6 +101,72 @@ class LdapHelper {
         }
 
     }
+
+    public static function createGroup($roleId, $roleName)
+    {
+	if ($roleId == 0)
+	{
+		$groups = self::getAllLDAPGroups();
+
+		$maxId = 0;
+
+		foreach ($groups as $group)
+		{
+			if ($group->id > $maxId)
+			{
+				$maxId = $group->id;
+			}
+		}
+
+		$roleId = $maxId + 1;
+	}
+
+        $group = Adldap::make()->group(['gidnumber' => $roleId, 'objectclass' => ['top', 'posixGroup']]);
+
+        $dn = $group->getDnBuilder();
+
+        $dn->addOu('groups');
+
+        $dn->addCn($roleName);
+
+        $group->setDn($dn);
+
+	$group->save();
+	
+	return $group;
+    }
+
+    public static function createUser($firstName, $lastName, $username, $password)
+    {
+	$user = Adldap::make()->user();
+
+	$user->setCommonName($username);
+	$user->setDisplayName($firstName . " " . $lastName);
+	$user->setFirstName($firstName);
+	$user->setLastName($lastName);
+	$user->setPassword($password);
+
+	$dn = $user->getDnBuilder();
+
+	$dn->addCn($user->getCommonName());
+	$dn->addOu('Testusers');
+
+	$baseDn = env(LDAP_BASE_DN);
+
+	$parts = explode(",", $baseDn);
+
+	foreach ($parts as $part)
+	{
+		$dn->addDc(str_replace("dc=", "", $part));
+	}
+
+	echo "DN: [" . $dn->get() . "]\n";
+
+	$user->setDn($dn);
+	$user->save();
+
+
+   }
 }
 
 

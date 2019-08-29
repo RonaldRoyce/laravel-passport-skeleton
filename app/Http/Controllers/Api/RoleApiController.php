@@ -10,6 +10,7 @@ use App\Models\Role\RolePermission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Helpers\LdapHelper;
 
 class RoleApiController extends Controller {
 	protected $_adldap;
@@ -65,22 +66,7 @@ class RoleApiController extends Controller {
                 $roleId = $request->all()['roleid'];
                 $roleName = $request->all()['rolename'];
 
-                $group = $this->_adldap->make()->group(['gidnumber' => $roleId, 'objectclass' => ['top', 'posixGroup']]);
-
-                $dn = $group->getDnBuilder();
-
-                $dn->addOu('groups');
-
-                $dn->addCn($roleName);
-
-                $group->setDn($dn);
-
-		$role = new Role();
-
-               	$role->role_id = $roleId;
-               	$role->name =  $roleName;
-
-               	$role->save();
+		LdapHelper::createGroup($roleId, $roleName);
 	}
 
 	public function delete(Request $request) {

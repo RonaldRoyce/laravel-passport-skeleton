@@ -232,9 +232,12 @@ return [
                 |
                 */
 
-                'use_ssl' => env('LDAP_USE_SSL', false),
+                'use_ssl' => env('LDAP_USE_SSL', true),
                 'use_tls' => env('LDAP_USE_TLS', false),
 
+		'custom_options' => [
+    			LDAP_OPT_X_TLS_REQUIRE_CERT => LDAP_OPT_X_TLS_NEVER
+		]
             ],
 
         ],

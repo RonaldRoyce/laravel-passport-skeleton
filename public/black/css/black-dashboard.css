@@ -15418,6 +15418,9 @@ i.tim-icons.icon-zoom-split, i.tim-icons.icon-sound-wave {
   margin-bottom: 0;
   height: 70px;
   margin: 5px;
+  width: calc(100% - 40px);
+  margin-left: 20px;
+  margin-right: 20px;
   border-radius: 8px;
 }
 
@@ -15427,8 +15430,8 @@ i.tim-icons.icon-zoom-split, i.tim-icons.icon-sound-wave {
 
 .perfect-scrollbar-on .sidebar,
 .perfect-scrollbar-on .main-panel {
-  height: 100%;
-  max-height: 100%;
+  height: calc(100% - 154px);
+  max-height: calc(100% - 154px);
 }
 
 @media (min-width: 991px) {
