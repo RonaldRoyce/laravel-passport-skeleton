@@ -15410,8 +15410,8 @@ i.tim-icons.icon-zoom-split, i.tim-icons.icon-sound-wave {
 }
 
 .main-panel>.content {
-  padding: 78px 30px 30px 280px;
-  min-height: calc(100vh - 70px);
+  padding: 78px 30px 30px 335px;
+  height: calc(100vh - 10px);
 }
 
 .main-panel>.navbar {
@@ -18014,7 +18014,8 @@ thead.role-permission {
 
 tbody.role-permission {
         display: block;
-        max-height: 787px;
+        height: 400px;
+        max-height: 400px;
         overflow-y: auto;
         background-color: #ffffff;
 }

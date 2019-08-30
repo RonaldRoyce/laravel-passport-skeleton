@@ -232,7 +232,7 @@ return [
                 |
                 */
 
-                'use_ssl' => env('LDAP_USE_SSL', true),
+                'use_ssl' => env('LDAP_USE_SSL', false),
                 'use_tls' => env('LDAP_USE_TLS', false),
 
 		'custom_options' => [

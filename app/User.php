@@ -68,4 +68,22 @@ class User extends Authenticatable
 
 	return false;
     }
+
+    public static function mapFromLdap($u)
+    {
+	$user = new \App\User();
+
+	$user->username = $u->getAttributes()['uid'][0];
+	$user->password =  $u->getAttributes()['userpassword'][0];
+	if (substr($user->password, 0, 1) == '{')
+	{
+		$hashMethod = substr($user->password, 1, stripos($user->password, '}'));
+		$user->password = substr($user->password, stripos($user->password, '}') + 1);
+	}
+	$user->role_id = $u->getAttributes()['gidnumber'][0];	
+	$user->name = $u->getAttributes()['givenname'][0] . " " . $u->getAttributes()['sn'][0];
+	$user->email = (array_key_exists('mail', $u->getAttributes()) ? $u->getAttributes()['mail'][0] : '');
+
+	return $user;
+    }
 }

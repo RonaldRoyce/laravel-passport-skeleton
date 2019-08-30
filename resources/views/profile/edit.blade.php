@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-             <table class="table table-bordered" style="width: 100%;margin: auto;">
+             <table class="table table-bordered" style="width: 100%;margin: auto;height: calc(100vh - 148px);">
                     <tr>
                          <td style="width: 50%;vertical-align: top;height: 1px;">
 
@@ -26,7 +26,11 @@
 
 <li class="nav">
                          <div class="form-group">
-                                <label>{{ _('Role') }}:&nbsp;<span class="info-text"><?php if(Auth::user()->role) { echo Auth::user()->role->name; } else { echo "Unknown"; } ?></span></label>
+                                <label>{{ _('Role') }}:&nbsp;<span class="info-text"><?php if (Auth::user()->role) {
+    echo Auth::user()->role->name;
+} else {
+    echo "Unknown";
+} ?></span></label>
                             </div>
 </li>
 <li class="nav">
