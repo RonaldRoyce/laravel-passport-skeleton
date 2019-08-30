@@ -30,57 +30,44 @@ class RolePermissionsController extends Controller
      */
     public function index()
     {
-	$user = Auth::user();
+        $user = Auth::user();
 
-	if ($user->role == null)
-	{
-        	return redirect('/notauthorized');
-     	}	         
-
+        if ($user->role == null) {
+            return redirect('/notauthorized');
+        }
+ 
         $providerConfig = ConfigHelper::getAuthDriverProviderConfig();
 
-	if ($providerConfig->driver == "ldap")
-        {
-		LdapHelper::syncLDAPGroups();
-	}
+        if ($providerConfig->driver == "ldap") {
+            LdapHelper::syncLDAPGroups();
+        }
 
-	$rolePermissionsList = array();
+        $rolePermissionsList = array();
 
         $rolesDefined = Role::all();
  
         $rolesPermissionsList = array();
         $rolesDefine = array();
 
-	foreach ($rolesDefined as $definedRole)
-	{
-		$roleId = $definedRole->role_id;
-		$roleName = $definedRole->name;
+        foreach ($rolesDefined as $definedRole) {
+            $roleId = $definedRole->role_id;
+            $roleName = $definedRole->name;
 
-		$rolePermissions = RolePermission::where('role_id', '=', $roleId)->get();
+            $rolePermissions = RolePermission::where('role_id', '=', $roleId)->get();
 
-		if (count($rolePermissions) == 0)
-		{
-			$rolePermissionsList[] = array("role_id" => $roleId, "name" => $roleName, "permissions" => '');
-			continue;
-		}
+            if (count($rolePermissions) == 0) {
+                $rolePermissionsList[] = (object)array("role_id" => $roleId, "name" => $roleName, "permissions" => array());
+                continue;
+            }
 
-		$permissionNames = "";
+            $permissions = array();
 
-		foreach ($rolePermissions as $rolePermission)
-		{
-			$role = $rolePermission->role;
-			$permission = $rolePermission->permission;
+            foreach ($rolePermissions as $rolePermission) {
+                $permissions[] = (object)$rolePermission->permission;
+            }
 
-			if ($permissionNames != "")
-			{
-				$permissionNames .= ", ";
-			}
-		
-			$permissionNames .= $permission->name;
-		}
-	
-		$rolePermissionsList[] = array("role_id" => $roleId, "name" => $roleName, "permissions" => $permissionNames);
-	}
+            $rolePermissionsList[] = (object)array("role_id" => $roleId, "name" => $roleName, "permissions" => $permissions);
+        }
 
         return view('rolepermission.index', ["rolepermissions" => (object)$rolePermissionsList]);
     }

@@ -1,4 +1,4 @@
-@extends('layouts.app', ['pageSlug' => 'role-index', 'titlePage' => __('User Roles'), 'sidebarType' => 'admin'])
+@extends('layouts.app', ['pageSlug' => 'role-index', 'titlePage' => __('Roles'), 'sidebarType' => 'admin'])
 
 @section('content')
 <div class="container">

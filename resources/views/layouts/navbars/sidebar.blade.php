@@ -15,14 +15,14 @@
 
                 <div class="collapse show" id="laravel-examples">
                     <ul class="nav pl-4">
-			@if (Auth::user()->hasPermission('usermanagement-index'))
-                        <li @if ($pageSlug == 'users') class="active " @endif>
-                            <a href="{{ route('user.index')  }}">
-                                <i class="tim-icons icon-bullet-list-67"></i>
-                                <span class="nav-link-text">{{ _('User Management') }}</span>
+                    @if ( Auth::user()->hasPermission('permissionmanagement-index'))			
+                        <li @if ($pageSlug == 'permissions-index') class="active " @endif>
+                            <a href="{{ route('permissions')  }}">
+                                <i class="fa fa-object-group"></i>
+                                <span class="nav-link-text">{{ _('Permissions') }}</span>
                             </a>
                         </li>
-			@endif
+                    @endif
 			@if ( Auth::user()->hasPermission('rolemanagement-index'))
                         <li @if ($pageSlug == 'roles') class="active " @endif>
                             <a href="{{ route('roles')  }}">
@@ -36,6 +36,15 @@
                             <a href="{{ route('rolepermissions')  }}">
                                 <i class="fa fa-object-group"></i>
                                 <span class="nav-link-text">{{ _('Role Permissions') }}</span>
+                            </a>
+                        </li>
+			@endif
+                        
+               @if (Auth::user()->hasPermission('usermanagement-index'))
+                        <li @if ($pageSlug == 'users') class="active " @endif>
+                            <a href="{{ route('user.index')  }}">
+                                <i class="tim-icons icon-bullet-list-67"></i>
+                                <span class="nav-link-text">{{ _('User Management') }}</span>
                             </a>
                         </li>
 			@endif

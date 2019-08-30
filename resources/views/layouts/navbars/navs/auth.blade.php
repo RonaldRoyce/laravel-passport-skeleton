@@ -2,13 +2,11 @@
     <div class="container-fluid">
         <div class="navbar-wrapper">
             <div class="navbar-toggle d-inline">
-                <button type="button" class="navbar-toggler">
-                    <span class="navbar-toggler-bar bar1"></span>
-                    <span class="navbar-toggler-bar bar2"></span>
-                    <span class="navbar-toggler-bar bar3"></span>
-                </button>
+                <img src="/images/yourlogohere.png" width="100" height="100" />     
+                <div class="navbar-toggle d-inline">
+            <a class="navbar-brand" href="#/">{{ $titlePage }}</a>
             </div>
-            <a class="navbar-brand" href="#">{{ $page ?? __('My Application') }}</a>
+            </div>
         </div>
     </div>
 </nav>

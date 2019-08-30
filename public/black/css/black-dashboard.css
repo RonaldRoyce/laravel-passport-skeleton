@@ -1480,7 +1480,7 @@ pre code {
 
 .table {
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 5px;
   background-color: transparent;
 }
 
@@ -12226,7 +12226,7 @@ fieldset[disabled] .btn-link.active {
 }
 
 .footer {
-  padding: 24px 0 24px 250px;
+  padding: 24px 0 24px 338px;
 }
 
 .footer [class*="container-"] {
@@ -13520,10 +13520,13 @@ img {
   position: fixed;
   padding-top: .3125rem;
   padding-bottom: .3125rem;
-  color: #1e1e28; 
+  color: #0071bc;
+  font-weight: bold; 
   margin-left: 17px;
   margin-top: 3px;
   font-size: 2rem; 
+  width: 100%;
+  text-align: center;
 }
 
 .navbar .navbar-toggle button:focus,
@@ -13972,6 +13975,7 @@ img {
   }
   .navbar .navbar-toggle {
     display: none;
+    line-height: 100px;
   }
   .navbar-nav .nav-link.profile-photo {
     padding: 0;
@@ -13993,6 +13997,7 @@ img {
   .navbar[class*='navbar-toggleable-'] .container {
     margin-left: 0;
     margin-right: 0;
+    line-height: 100px;
   }
 }
 
@@ -14214,6 +14219,10 @@ hr {
   color: rgba(0, 0, 0, 0.7) !important;
 }
 
+.table>tbody>tr>td.dark-background {
+     color: #ffffff !important;
+   }
+   
 .table>tbody>tr>td.light-background {
   color: #344675 !important;
 }
@@ -14300,7 +14309,6 @@ hr {
 .table>thead>tr>th {
   border-bottom-width: 1px;
   font-size: 12px;
-  text-transform: uppercase;
   font-weight: 700;
   border: 0;
   color: rgba(255, 255, 255, 0.7);
@@ -14338,7 +14346,7 @@ hr {
 .table>thead>tr>td,
 .table>tbody>tr>td,
 .table>tfoot>tr>td {
-  border-color: rgba(255, 255, 255, 0.1);
+  border-color: #982828;
   padding: 12px 7px;
   vertical-align: middle;
 }
@@ -14357,7 +14365,7 @@ hr {
 }
 
 .table .th-description {
-  max-width: 150px;
+  max-width: 150px;4913
 }
 
 .table .td-price {
@@ -14918,7 +14926,7 @@ table.tablesorter thead tr .headerSortDown {
   height: calc(100vh - 90px);
   width: 300px;
   position: fixed;
-  top: 0;
+  top: 53px;
   left: 0;
   z-index: 1;
   background-size: cover;
@@ -15411,12 +15419,14 @@ i.tim-icons.icon-zoom-split, i.tim-icons.icon-sound-wave {
 
 .main-panel>.content {
   padding: 78px 30px 30px 335px;
-  height: calc(100vh - 10px);
+  height: calc(100vh - 63px);
+  position: relative;
+  top: 60px;
 }
 
 .main-panel>.navbar {
   margin-bottom: 0;
-  height: 70px;
+  height: 120px;
   margin: 5px;
   width: calc(100% - 40px);
   margin-left: 20px;
@@ -18014,7 +18024,7 @@ thead.role-permission {
 
 tbody.role-permission {
         display: block;
-        height: 400px;
+       /*  height: 400px; */
         max-height: 400px;
         overflow-y: auto;
         background-color: #ffffff;
@@ -18027,8 +18037,8 @@ th.role-name, td.role-name {
 
 
 th.role-permissions, td.role-permissions {
-        width: 420px;
-        max-width: 420px;
+        width: 584px;
+        max-width: 584;
 }
 
 th.role-permission-action, td.role-permission-action {
@@ -18039,5 +18049,27 @@ th.role-permission-action, td.role-permission-action {
 .info-text {
      color: #3b8ee0;
 }
+
+.view-table {
+/*     height: calc(100vh - 294px); */
+}
+
+tbody.view-table {
+  /*   max-height: calc(100vh - 192px); */
+     display: block;
+     overflow-y: auto;
+}
+.main-card {
+    /* height: calc(100vh - 157px); */
+}
+
+th.permission-name, td.permission-name {
+     width: 300px;
+}
+
+th.permission-page-id, td.permission-page-id {
+     width: 300px;
+}
+
 
 /*# sourceMappingURL=dashboard-free.css.map */

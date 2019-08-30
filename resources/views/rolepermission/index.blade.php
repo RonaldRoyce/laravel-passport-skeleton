@@ -1,13 +1,10 @@
-@extends('layouts.app', ['pageSlug' => 'roleindex', 'titlePage' => __('User Roles'), 'sidebarType' => 'admin'])
+@extends('layouts.app', ['pageSlug' => 'rolepermission-index', 'titlePage' => __('Role Permissions'), 'sidebarType' => 'admin'])
 
 @section('content')
 <div class="container">
-    <div id="error-message-div" class="alert alert-danger" style="display: none;" role="alert">
-    </div>
-
     <div class="row justify-content-center">
         <div class="col-md-14">
-            <div class="card">
+            <div class="card main-card">
                 <div class="card-header card-header-slim">
 			<div>
 				<div style="float: left;"><h3 class="slim">Role Permissions</h3></div>
@@ -15,7 +12,7 @@
 			</div>
 		</div>
                 <div class="card-body">
-			<table class="table table-striped table-bordered">
+			<table class="table table-striped table-bordered view-table">
 				<thead class="thead-light role-permission">
 					<tr>
 						<th scope="col" class="role-name">Role Name</th>
@@ -23,13 +20,33 @@
 						<th scope="col" class="role-permission-action">Action</th>
 					</tr>
 				</thead>
-				<tbody class="role-permission">
+				<tbody class="role-permission view-table">
 					@foreach ($rolepermissions as $role)
 						<tr>
-							<td class="role-name">{{$role["name"]}}</td>
-							<td class="role-permissions">{{$role["permissions"]}}</td>
+							<td class="role-name">{{$role->name}}</td>
+							<td class="role-permissions">
+                                        @if (count($role->permissions) > 0)
+                                        <table class="table table-bordered table-striped">
+                                             <thead style="display: block;">
+                                                  <tr>
+                                                       <th class="permission-name">Name</th>
+                                                       <th class="permission-page-id">Page Id</th>
+                                                  </tr> 
+                                             </thead>
+                                             <tbody style="display: block;max-height: 200px;overflow-y: auto;">
+                                             @foreach ($role->permissions as $permission)
+                                                  <tr>
+                                                       <td class="permission-name dark-background">{{$permission->name}}</td>
+                                                       <td class="permission-page-id dark-background">{{$permission->page_id}}</td>
+                                                  </tr>
+                                             @endforeach
+                                             </tbody>
+                                        </table>
+                                        @endif
+                                   </td>
 							<td class="action-btns role-permission-action">
-								<button type="button" class="btn btn-primary edit-rolepermission-btn" data-name="{{$role["name"]}}" data-id="{{$role["role_id"]}}">Edit</button>
+                                        <button type="button" class="btn btn-primary edit-rolepermission-btn" data-name="{{$role->name}}" data-id="{{$role->role_id}}">Edit</button>
+                                   </td>
 						</tr>
 					@endforeach
 				</tbody>

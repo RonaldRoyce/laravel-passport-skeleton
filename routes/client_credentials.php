@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware('client_credentials')->get('/my', function (Request $request) {
-	return array('user_id' => 1);
+    return array('user_id' => 1);
 });
 
 Route::get('oauth/token', 'AuthController@auth');
@@ -28,3 +28,5 @@ Route::middleware('client_credentials')->get('/role/delete', 'Api\RoleApiControl
 Route::middleware('client_credentials')->get('/rolepermission/get', 'Api\RoleApiController@getRolePermissions')->name('rolepermissionget');
 Route::middleware('client_credentials')->get('/rolepermission/add', 'Api\RoleApiController@addRolePermissions')->name('rolepermissionadd');
 
+
+Route::middleware('client_credentials')->get('/permission/add', 'Api\RoleApiController@addPermission')->name('permissionadd');

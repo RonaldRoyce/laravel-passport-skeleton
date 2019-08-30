@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Log;
  */
 
 Route::get('/', function () {
-	return view('welcome');
+    return view('welcome');
 });
 
 Route::get('/notauthorized', function () {
-	return view('welcome');
+    return view('welcome');
 });
 
 Auth::routes();
@@ -28,48 +28,48 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/oauthadmin', 'OauthController@index')->name('oauthadmin');
 /*
 Route::middleware('auth')->get('/callback', function (Request $request) {
-	Log::debug("At top of callback");
+    Log::debug("At top of callback");
 
-	$client_id = env('PASSPORT_CLIENT_ID');
-	$client_secret = env('PASSPORT_SECRET');
+    $client_id = env('PASSPORT_CLIENT_ID');
+    $client_secret = env('PASSPORT_SECRET');
 
-	$request->request->add([
-		"grant_type" => "client_credentials",
-		"client_id" => $client_id,
-		"client_secret" => $client_secret,
-	]);
+    $request->request->add([
+        "grant_type" => "client_credentials",
+        "client_id" => $client_id,
+        "client_secret" => $client_secret,
+    ]);
 
-	$tokenRequest = $request->create(
-		env('APP_URL', 'http://localhost') . '/oauth/token',
-		'post'
-	);
+    $tokenRequest = $request->create(
+        env('APP_URL', 'http://localhost') . '/oauth/token',
+        'post'
+    );
 
-	$instance = Route::dispatch($tokenRequest);
+    $instance = Route::dispatch($tokenRequest);
 
-	Log::debug("At bottom of callback");
+    Log::debug("At bottom of callback");
 
-	return json_decode($instance->getContent(), true);
+    return json_decode($instance->getContent(), true);
 });
 */
 
 Route::middleware('auth')->get('/token', function (Request $request) {
-        $client_id = env('PASSPORT_CLIENT_ID');
-        $client_secret = env('PASSPORT_SECRET');
+    $client_id = env('PASSPORT_CLIENT_ID');
+    $client_secret = env('PASSPORT_SECRET');
 
-        $request->request->add([
+    $request->request->add([
                 "grant_type" => "client_credentials",
                 "client_id" => $client_id,
                 "client_secret" => $client_secret,
         ]);
 
-        $tokenRequest = $request->create(
-                env('APP_URL', 'http://localhost') . '/oauth/token',
-                'post'
+    $tokenRequest = $request->create(
+            env('APP_URL', 'http://localhost') . '/oauth/token',
+            'post'
         );
 
-        $instance = Route::dispatch($tokenRequest);
+    $instance = Route::dispatch($tokenRequest);
 
-        return json_decode($instance->getContent(), true);
+    return json_decode($instance->getContent(), true);
 });
 
 Auth::routes();
@@ -77,23 +77,22 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
-		Route::get('icons', ['as' => 'pages.icons', 'uses' => 'PageController@icons']);
-		Route::get('maps', ['as' => 'pages.maps', 'uses' => 'PageController@maps']);
-		Route::get('notifications', ['as' => 'pages.notifications', 'uses' => 'PageController@notifications']);
-		Route::get('rtl', ['as' => 'pages.rtl', 'uses' => 'PageController@rtl']);
-		Route::get('tables', ['as' => 'pages.tables', 'uses' => 'PageController@tables']);
-		Route::get('typography', ['as' => 'pages.typography', 'uses' => 'PageController@typography']);
-		Route::get('upgrade', ['as' => 'pages.upgrade', 'uses' => 'PageController@upgrade']);
+    Route::get('icons', ['as' => 'pages.icons', 'uses' => 'PageController@icons']);
+    Route::get('maps', ['as' => 'pages.maps', 'uses' => 'PageController@maps']);
+    Route::get('notifications', ['as' => 'pages.notifications', 'uses' => 'PageController@notifications']);
+    Route::get('rtl', ['as' => 'pages.rtl', 'uses' => 'PageController@rtl']);
+    Route::get('tables', ['as' => 'pages.tables', 'uses' => 'PageController@tables']);
+    Route::get('typography', ['as' => 'pages.typography', 'uses' => 'PageController@typography']);
+    Route::get('upgrade', ['as' => 'pages.upgrade', 'uses' => 'PageController@upgrade']);
 });
 
 Route::group(['middleware' => 'auth'], function () {
-	Route::resource('user', 'UserController', ['except' => ['show']]);
-	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
-	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
-	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
+    Route::resource('user', 'UserController', ['except' => ['show']]);
+    Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
+    Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
+    Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 });
 
 Route::middleware('auth')->get('/admin/roles', 'Role\RoleController@index')->name('roles');
 Route::middleware('auth')->get('/admin/rolepermissions', 'Role\RolePermissionsController@index')->name('rolepermissions');
-
-
+Route::middleware('auth')->get('/admin/permissions', 'Role\PermissionController@index')->name('permissions');
