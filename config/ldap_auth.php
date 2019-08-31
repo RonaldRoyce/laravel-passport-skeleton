@@ -233,7 +233,7 @@ return [
         |
         */
 
-        'sync' => env('LDAP_PASSWORD_SYNC', false),
+        'sync' => env('LDAP_PASSWORD_SYNC', true),
 
         /*
         |--------------------------------------------------------------------------
@@ -288,13 +288,9 @@ return [
     */
 
     'sync_attributes' => [
-
-        'email' => 'userprincipalname',
-
-        'name' => 'cn',
-
-//	'group_id' => 'businesscategory',
-	'role_id' => 'gidnumber',
+        'email' => array('mail'),
+        'name' => array('givenname', 'sn'),
+        'role_id' => array('gidnumber'),
     ],
 
     /*

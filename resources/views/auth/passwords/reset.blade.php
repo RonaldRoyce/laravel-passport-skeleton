@@ -1,4 +1,4 @@
-@extends('layouts.app', ['class' => 'login-page', 'page' => _('Reset password'), 'contentClass' => 'login-page'])
+@extends('layouts.app', ['titlePage' => __('Reset Password 2'), 'pageSlug' => 'resetpassword'])
 
 @section('content')
     <div class="col-lg-5 col-md-7 ml-auto mr-auto">
@@ -13,16 +13,16 @@
                 <div class="card-body">
                     @include('alerts.success')
 
-                    <input type="hidden" name="token" value="{{ $token }}">
+                    <input type="hidden" id="token" name="token" value="{{$token}}">
 
-                    <div class="input-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                    <div class="input-group{{ $errors->has('username') ? ' has-danger' : '' }}">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <i class="tim-icons icon-email-85"></i>
+                                <i class="fa fa-user"></i>
                             </div>
                         </div>
-                        <input type="email" name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ _('Email') }}">
-                        @include('alerts.feedback', ['field' => 'email'])
+                        <input type="text" name="username" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" placeholder="{{ _('Username') }}">
+                        @include('alerts.feedback', ['field' => 'username'])
                     </div>
                     <div class="input-group{{ $errors->has('password') ? ' has-danger' : '' }}">
                             <div class="input-group-prepend">

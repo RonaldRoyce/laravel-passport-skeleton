@@ -63,9 +63,9 @@ Route::middleware('auth')->get('/token', function (Request $request) {
         ]);
 
     $tokenRequest = $request->create(
-            env('APP_URL', 'http://localhost') . '/oauth/token',
-            'post'
-        );
+        env('APP_URL', 'http://localhost') . '/oauth/token',
+        'post'
+    );
 
     $instance = Route::dispatch($tokenRequest);
 
@@ -75,6 +75,7 @@ Route::middleware('auth')->get('/token', function (Request $request) {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
+Route::get('/resetpassword', 'Auth\ResetPasswordController@index')->name('resetpassword')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('icons', ['as' => 'pages.icons', 'uses' => 'PageController@icons']);

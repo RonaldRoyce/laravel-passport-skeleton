@@ -22,7 +22,7 @@ class DatabaseUserInit extends Command
      *
      * @var string
      */
-    protected $signature = 'db:init';
+    protected $signature = 'db:authinit';
 
     protected $siteAdminGroupName;
     protected $ldapGroupsGroup;
@@ -47,7 +47,7 @@ class DatabaseUserInit extends Command
     {
         parent::__construct();
 
-        $this->siteAdminGroupName = env('LDAP_SITE_ADMIN_CN', 'Site Administrators');
+        $this->siteAdminGroupName = env('SITE_ADMIN_ROLE', 'Site Administrators');
         $this->ldapGroupsGroup = env('LDAP_GROUPS_CN', 'groups');
         $this->siteAdminUsername = env('SITE_ADMIN_USERNAME', 'siteadmin');
         $this->siteAdminPassword = env('SITE_ADMIN_DEFAULT_PASSWORD', 'secret');
