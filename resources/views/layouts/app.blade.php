@@ -19,11 +19,13 @@
         <!-- CSS -->
         <link href="{{ asset('black') }}/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
         <link href="{{ asset('black') }}/css/theme.css" rel="stylesheet" />
-
-	<link href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" rel="stylesheet" />
 <!--
+	<link href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" rel="stylesheet" />
+
 	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 -->
+
+          <script src="https://kit.fontawesome.com/f09ad3fcf7.js"></script>
 
     </head>
     <body class="{{ $class ?? '' }}">

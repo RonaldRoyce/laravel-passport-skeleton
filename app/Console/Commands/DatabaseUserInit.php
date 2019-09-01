@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use App\Models\Role\Permission;
 use App\Models\Role\RolePermission;
 use App\Models\Role\Role;
+use App\Models\MenuItem;
 use App\User;
 use App\Helpers\LdapHelper;
 use App\Helpers\ConfigHelper;
@@ -62,6 +63,19 @@ class DatabaseUserInit extends Command
      */
     public function handle()
     {
+        $menuItems = MenuItem::whereNull('menu_item_parent_id')->get();
+         
+        foreach ($menuItems as $menuItem) {
+            echo "Main Menu " . $menuItem->menu_item_text . "\n";
+             
+            $submenuItems = $menuItem->submenuItems;
+
+            foreach ($submenuItems as $submenuItem) {
+                echo "Sub menu item id " . $submenuItem->menu_item_id . "  type " . $submenuItem->menu_item_type . " text " . $submenuItem->menu_item_text . "\n";
+            }
+        }
+        exit(1);
+         
         $providerConfig = ConfigHelper::getAuthDriverProviderConfig();
 
         $this->info("Current driver is: " . $providerConfig->driver);

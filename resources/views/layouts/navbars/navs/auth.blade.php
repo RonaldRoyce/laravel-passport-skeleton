@@ -4,7 +4,7 @@
             <div class="navbar-toggle d-inline">
                 <img src="/images/yourlogohere.png" width="100" height="100" />     
                 <div class="navbar-toggle d-inline">
-            <a class="navbar-brand" href="#/">{{ $titlePage }}</a>
+            <a class="navbar-brand" href="#/">{{ env('APP_NAME', 'My Website') }}</a>
             </div>
             </div>
         </div>

@@ -14084,7 +14084,8 @@ h2,
 
 h3,
 .h3 {
-  margin-bottom: 30px;
+  margin-bottom: 15px;
+  margin-top: 15px;
   line-height: 1.4em;
 }
 
@@ -14105,6 +14106,7 @@ h5,
 .h5 {
   line-height: 1.4em;
   margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 h6,
@@ -15209,7 +15211,8 @@ i.tim-icons.icon-zoom-split, i.tim-icons.icon-sound-wave {
   line-height: 30px;
   width: 34px;
   text-align: center;
-  color: rgba(255, 255, 255, 0.8);
+  color: #000000;
+  font-weight: bold;
   position: relative;
 }
 
@@ -18071,5 +18074,8 @@ th.permission-page-id, td.permission-page-id {
      width: 300px;
 }
 
+.profile-image {
+     background-image: url('/black/img/anime3.png');
+}
 
 /*# sourceMappingURL=dashboard-free.css.map */
