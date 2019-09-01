@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 
 class MenuHelper
 {
-    public static function singleItemMenuTemplate($menuItem, $currentPageId)
+    public static function singleMenuItemTemplate($menuItem, $currentPageId)
     {
         if (!Auth::user()->hasPermission($menuItem->page_id)) {
             return '';
@@ -34,7 +34,7 @@ class MenuHelper
         );
     }
 
-    public static function mutipleMenuItemTemplate($menuItem, $currentPageId)
+    public static function multipleMenuItemTemplate($menuItem, $currentPageId)
     {
         $divAnchorName = $menuItem->div_anchor_name;
         $topLevelImageClass = $menuItem->image_class;
@@ -71,13 +71,13 @@ class MenuHelper
                 }
            
                 if ($submenuItem->menu_item_type == "G") {
-                    $html .= self::multipleItemMenuTemplate($submenuItem, $currentPageId);
+                    $html .= self::multipleMenuItemTemplate($submenuItem, $currentPageId);
                 } else {
-                    $html .= self::singleItemMenuTemplate($submenuItem, $currentPageId);
+                    $html .= self::singleMenuItemTemplate($submenuItem, $currentPageId);
                 }
             }
         } else {
-            $html .= self::singleItemMenuTemplate($menuItem, $currentPageId);
+            $html .= self::singleMenuItemTemplate($menuItem, $currentPageId);
         }
         
         $html .= '
@@ -100,9 +100,9 @@ class MenuHelper
 
         foreach ($menuItems as $menuItem) {
             if ($menuItem->menu_item_type == "G") {
-                $html .= self::mutipleMenuItemTemplate($menuItem, $currentPageId);
+                $html .= self::multipleMenuItemTemplate($menuItem, $currentPageId);
             } else {
-                $html .= self::singleItemMenuTemplate($menuItem, $currentPageId);
+                $html .= self::singleMenuItemTemplate($menuItem, $currentPageId);
             }
         }
 
