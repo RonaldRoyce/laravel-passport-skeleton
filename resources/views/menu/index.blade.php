@@ -33,13 +33,13 @@
 							<td class="menu-type">{{ $menu->menu_item_type == "G" ? "Menu" : "Menu Item" }}</td>
 							<td class="menu-move" style="text-align: center;">
                                         @if($itemNum < count($menus) - 1)
-                                        <a href="#"><i class="fa fa-arrow-alt-circle-down" style="color: green;font-size: 39px;"></i></a>
+                                        <a href="#" class="move-down-btn" data-name="{{$menu->menu_item_text}}" data-id="{{$menu->menu_item_id}}"><i class="fa fa-arrow-alt-circle-down" style="color: green;font-size: 39px;"></i></a>
                                         @endif
                                         @if($itemNum > 0)
-                                        <a href="#"><i class="fa fa-arrow-alt-circle-up" style="color: red;font-size: 39px;"></i></a>
+                                        <a href="#" class="move-up-btn" data-name="{{$menu->menu_item_text}}" data-id="{{$menu->menu_item_id}}"><i class="fa fa-arrow-alt-circle-up" style="color: red;font-size: 39px;"></i></a>
                                         @endif
                                    </td>
-							<td class="menu-action"><button type="button" class="btn btn-primary" id="rename-menu" data-name="{{$menu->menu_item_text}}" data-id="{{$menu->menu_item_id}}">Edit</button>&nbsp;<button type="button" class="btn btn-danger delete-menu-btn" data-name="{{$menu->menu_item_text}}" data-id="{{$menu->menu_item_id}}">Delete</button></td>
+							<td class="menu-action"><button type="button" class="btn btn-primary" id="edit-menu-btn" data-name="{{$menu->menu_item_text}}" data-id="{{$menu->menu_item_id}}">Edit</button>&nbsp;<button type="button" class="btn btn-danger delete-menu-btn" data-name="{{$menu->menu_item_text}}" data-id="{{$menu->menu_item_id}}">Delete</button></td>
                               </tr>
                               <?php
                                    $itemNum++;
@@ -114,8 +114,7 @@
      var globalRoleName = "";
 </script>
 
-<!--
 <script style="text/javascript" src="/js/menu.js"></script>
--->
+
 @endpush
 
