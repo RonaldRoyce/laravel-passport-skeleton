@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Helpers\MenuHelper;
-use App\Models\MenuItem;
+use App\Models\Menu;
 
 class MenuController extends Controller
 {
     public function index()
     {
-        $menuItems = MenuItem::whereNull('menu_item_parent_id')->orderBy('level_order')->get();
+        $menus = Menu::orderBy('name')->get();
 
-        return view('menu.index', array('menus' => $menuItems));
+        return view('menu.menu.index', array('menus' => $menus));
     }
 }
