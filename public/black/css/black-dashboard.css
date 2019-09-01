@@ -2350,7 +2350,7 @@ textarea.form-control {
   vertical-align: middle;
   user-select: none;
   border: 1px solid transparent;
-  padding: 11px 40px;
+  padding: 11px 15px;
   font-size: 0.875rem;
   line-height: 1.35em;
   border-radius: 0.25rem;
@@ -14943,7 +14943,7 @@ table.tablesorter thead tr .headerSortDown {
 
 .sidebar p, .sidebar span, .sidebar a.simple-text.logo-mini, a.simple-text.logo-normal, i.tim-icons, i.fab, b.caret, i.fa.fa-users, i.fa.fa-sign-out,
    i.fa.fa-object-group {
-	color: #000000 !important;
+	color: #000000;
 /*	font-weight: bold; */
 }
 
@@ -15079,7 +15079,7 @@ i.tim-icons.icon-zoom-split, i.tim-icons.icon-sound-wave {
 .sidebar .nav li>a+div .nav li>a,
 .off-canvas-sidebar .nav li>a+div .nav li>a {
   margin-top: 0px;
-  padding: 8px 8px;
+  padding: 8px 3px;
 }
 
 .sidebar .nav li>a,
@@ -18078,4 +18078,52 @@ th.permission-page-id, td.permission-page-id {
      background-image: url('/black/img/anime3.png');
 }
 
+.menu-text {
+     width: 300px;     
+}
+.menu-type {
+     width: 200px;
+}
+.menu-move {
+     width: 150px;
+}
+.menu-action {
+     width: 150px;
+}
+
+th.menu-text {
+     text-align: center;
+}
+
+th.menu-type {
+     text-align: center;
+}
+
+th.menu-move {
+     text-align: center;
+}
+
+th.menu-action {
+     text-align: center;
+}
+
+.submenu-div {
+     width: calc(100% - 40px);
+     margin: auto;
+     border-radius: 8px;
+     background-color: #3a8ee0;
+     color: white !important;
+}
+
+.black-image {
+     color: #000000 !important;
+}
+
+.white-image {
+     color: #ffffff !important;
+}
+
+.red-image {
+     color: #ff0000 !important;
+}
 /*# sourceMappingURL=dashboard-free.css.map */

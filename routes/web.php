@@ -93,6 +93,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('profile/edit', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
     Route::put('profile/update', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
     Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
+
+    Route::get('menus', ['as' => 'menu.index', 'uses' => 'MenuController@index']);
 });
 
 Route::middleware('auth')->get('/admin/roles', 'Role\RoleController@index')->name('roles');

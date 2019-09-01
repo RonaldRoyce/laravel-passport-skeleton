@@ -28,7 +28,7 @@
           <script src="https://kit.fontawesome.com/f09ad3fcf7.js"></script>
 
     </head>
-    <body class="{{ $class ?? '' }}">
+    <body class="{{ $class ?? '' }}" style="overflow: hidden;">
         @auth() 
 
             <div class="wrapper">

@@ -15,12 +15,13 @@ class MenuHelper
         $menuItemAnchorUrl = $menuItem->anchor_url;
         $menuItemImageClass = $menuItem->image_class;
         $menuItemText = $menuItem->menu_item_text;
-
+        $menuItemType = $menuItem->menu_item_type;
+   
         return sprintf(
             '
                                    <li %s>
                                         <a href="%s">
-                                             <i class="%s" style="width: 30px; height: 30px;border-radius: 2.2857rem;"></i>
+                                             <i class="%s ' . ($menuItemType == "G" ? "red-image" : "white-image") . '" style="width: 30px; height: 30px;border-radius: 2.2857rem;"></i>
                                              <span class="nav-link-text" >%s</span>
                                         </a>
                                    </li>
@@ -47,11 +48,11 @@ class MenuHelper
         $html = sprintf(
             '
                          <li>
-                              <a data-toggle="collapse" href="#%s">
-                              <i class="%s"></i>
+                              <a data-toggle="collapse" href="#%s" aria-expaneded="true">
+                              <i class="%s red-image"></i>
                               <span class="nav-link-text" >%s</span>
                               </a>
-                              <div class="collapse" id="%s">
+                              <div class="collapse show submenu-div" id="%s">
                                    <ul class="nav pl-4">
                          ',
             $divAnchorName,
