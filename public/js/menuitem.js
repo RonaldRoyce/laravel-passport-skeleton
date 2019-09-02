@@ -2,16 +2,32 @@ $(document).ready(function () {
   var roleName = ''
   var roleId = ''
 
-  $('#edit-menu-btn').on('click', function () {
-    var menuId = $('#edit-menu-btn').data('id')
-
-    window.location.href = menuEditUrl + '?menu_id=' + menuId
-
-    return false
+  $('.move-down-btn').on('click', function () {
+    var menuId = this.attributes['data-id'].value
   })
 
-  $('#add-menu-btn').on('click', function () {
-    menuName = $('#menu-name-input').val()
+  $('.move-up-btn').on('click', function () {
+    var menuId = this.attributes['data-id'].value
+  })
+
+  $('.edit-menu-btn').on('click', function () {
+    var menuId = $('#menu_id').val()
+    var menuItemId = this.attributes['data-id'].value
+
+    window.location.href =
+      menuEditUrl + '?menu_id=' + menuId + '&menu_item_id=' + menuItemId
+  })
+
+  $('#cancel-save-btn').on('click', function () {
+    window.location.href = '/menus'
+  })
+
+  $('#save-menu-item-btn').on('click', function () {
+    var a = 1
+  })
+  $('#rename-role').on('click', function () {
+    roleId = $('#delete-role').data('id')
+    roleName = $('#delete-role').data('name')
 
     $.ajax({
       url: tokenUrl,
@@ -19,19 +35,16 @@ $(document).ready(function () {
       success: function (data, textStatus, jqXHR) {
         var token = data['access_token']
         $.ajax({
-          url: menuAddUrl,
+          url: roleAddUrl,
           type: 'GET',
           headers: {
             Authorization: 'Bearer ' + token,
             Accept: 'application/json',
             'Content-Type': 'application/json'
           },
-          data: { name: menuName },
-          success: function (response, textStatus, jqXHR) {
-            if (response.success) {
-              window.location.href =
-                menuEditUrl + '?menu_id=' + response.data.id
-            }
+          data: { roleid: roleId, rolename: roleName },
+          success: function (data, textStatus, jqXHR) {
+            window.location.href = '/admin/roles'
             return false
           },
           error: function (jqXHR, textStatus, errorThrown) {
@@ -45,11 +58,6 @@ $(document).ready(function () {
     })
 
     return false
-  })
-
-  $('.edit-menu-btn').on('click', function () {
-    globalMenuId = this.attributes['data-id'].value
-    window.location.href = menuEditUrl + '?menu_id=' + globalMenuId
   })
 
   $('.delete-role-btn').on('click', function () {

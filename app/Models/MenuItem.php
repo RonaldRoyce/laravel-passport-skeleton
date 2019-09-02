@@ -11,7 +11,7 @@ class MenuItem extends Model
     public $timestamps = false;
 
     protected $menu_item_id = 0;
-    protected $menu_item_parent_d = 0;
+    protected $menu_item_parent_id = null;
     protected $menu_item_type = '';
     protected $page_id = '';
     protected $level_order = 0;
@@ -20,10 +20,18 @@ class MenuItem extends Model
     protected $menu_item_text = '';
     protected $image_class = '';
 
-    public function parentItem()
+    public function getNavTrailPath()
     {
-        echo "Getting submenu items\n";
-        return $this->hasOne('App\Models\MenuItem', 'menu_item_id', 'menu_item_parent_id');
+        if ($this->getAttributes()["menu_item_parent_id"]) {
+            $thisTrail = $this->getAttributes()["menu_item_text"];
+
+            $parentMenuItem = MenuItem::where('menu_item_id', '=', $this->getAttributes()["menu_item_parent_id"])->get()->first();
+
+
+            return '<a href="/menuitems?menu_id=' . $parentMenuItem->menu_id . '&menu_item_id=' . $parentMenuItem->getAttributes()["menu_item_id"] . '" style="color: #3b8ee0;">' . $parentMenuItem->getNavTrailPath() . "</a> / " . $thisTrail;
+        }
+
+        return $this->getAttributes()["menu_item_text"];
     }
 
     public function submenuItems()

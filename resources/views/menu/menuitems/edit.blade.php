@@ -7,50 +7,53 @@
 
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card main-card">
                 <div class="card-header card-header-slim">
-			<div>
-				<div style="float: left;"><h3 class="slim">Menu Items</h3></div>
-				<div class="slim" style="float: right;"><button class="btn btn-info" data-toggle="modal" data-target="#addMenuItemModal">Add Menu Item</button></div>
-				<div class="clear: both;"></div>
-			</div>
-		</div>
-                <div class="card-body">
-                <div><h3><?php echo $menuTrailPath; ?></h3></div>                     
-			<table class="table table-striped table-bordered">
-				<thead class="thead-light ldap-groups">
-					<tr>
-						<th scope="col" class="menu-text">Text</th>
-						<th scope="col" class="menu-type">Type</th>
-						<th scope="col" class="menu-move">&nbsp;</th>
-						<th scope="col" class="menu-action">Action</th>
-					</tr>
-				</thead>
-				<tbody class="ldap-groups">
-                         <?php
-                         $itemNum = 0;
-                         ?>
-					@foreach ($menus as $menu)
-						<tr>
-							<td class="menu-text"><a href="/menuitems?menu_id={{$menu_id}}&menu_item_id={{$menu->menu_item_id}}">{{$menu->menu_item_text}}</a></td>
-							<td class="menu-type">{{ $menu->menu_item_type == "G" ? "Menu" : "Menu Item" }}</td>
-							<td class="menu-move" style="text-align: center;">
-                                        @if($itemNum < count($menus) - 1)
-                                        <a href="#" class="move-down-btn" data-name="{{$menu->menu_item_text}}" data-id="{{$menu->menu_item_id}}"><i class="fa fa-arrow-alt-circle-down" style="color: green;font-size: 39px;"></i></a>
-                                        @endif
-                                        @if($itemNum > 0)
-                                        <a href="#" class="move-up-btn" data-name="{{$menu->menu_item_text}}" data-id="{{$menu->menu_item_id}}"><i class="fa fa-arrow-alt-circle-up" style="color: red;font-size: 39px;"></i></a>
-                                        @endif
-                                   </td>
-							<td class="menu-action"><button type="button" class="btn btn-primary edit-menu-btn" data-name="{{$menu->menu_item_text}}" data-id="{{$menu->menu_item_id}}">Edit</button>&nbsp;<button type="button" class="btn btn-danger delete-menu-btn" data-name="{{$menu->menu_item_text}}" data-id="{{$menu->menu_item_id}}">Delete</button></td>
-                              </tr>
-                              <?php
-                                   $itemNum++;
-                              ?>
-					@endforeach
-				</tbody>
-			</table>
+                    <div>
+                         <div style="float: left;"><h3 class="slim">Edit Menu Item</h3></div>
+                         
+                         <div class="clear: both;"></div>
+                    </div>
                 </div>
+               <div class="card-body view-table">
+                    <div><h3><?php echo $menuTrailPath; ?></h3></div>                     
+                    <div>
+                           <label for="menu-id" class="col-form-label">Type</label>
+                           <select class="form-control-black" id="menu-item-type" disabled>
+                                <option value="G" <?php if ($menuItem->menu_item_type == "G") {
+    echo "selected";
+} ?> >Menu</option>
+                                <option value="M" <?php if ($menuItem->menu_item_type == "M") {
+    echo "selected";
+} ?> >Menu Item</option>
+                         </select>
+                    </div>
+                    <div>
+                       <label for="menu-name" class="col-form-label">Text</label>
+                         <input type="text" class="form-control-black" id="menu-item-text" name="menu-item-text" value="{{$menuItem->menu_item_text}}" required>
+                    </div>
+                    <div>
+                       <label for="menu-name" class="col-form-label">Page Id</label>
+                         <input type="text" class="form-control-black" id="page-id" name="page-id" value="{{$menuItem->page_id}}" required>
+                    </div>
+                    <div>
+                       <label for="menu-name" class="col-form-label">Anchor Url</label>
+                         <input type="text" class="form-control-black" id="anchor-url" name="anchor-url" value="{{$menuItem->anchor_url}}" required>
+                    </div>
+                    @if ($menuItem->menu_item_type == "G")
+                         <div>
+                              <label for="menu-name" class="col-form-label">Anchor Div Id</label>
+                              <input type="text" class="form-control-black" id="anchor-url" name="anchor-url" value="{{$menuItem->anchor_url}}" required>
+                         </div>
+                    @endif
+                    <div>
+                       <label for="menu-name" class="col-form-label">Image Class</label>
+                         <input type="text" class="form-control-black" id="anchor-url" name="image-class" value="{{$menuItem->image_class}}" required>
+                    </div>
+               </div>
+            <div class="card-footer">
+               <div class="slim" style="float: left;"><button id="cancel-save-btn" class="btn btn-danger" data-toggle="modal" data-target="#addMenuItemModal">Cancel</button></div>
+               <div class="slim" style="float: right;"><button id="save-menu-item-btn" class="btn btn-info">Save</button></div>
             </div>
         </div>
     </div>
@@ -69,14 +72,14 @@
       <div class="modal-body">
           		<div>
                            <label for="menu-id" class="col-form-label">Menu Item Type</label>
-                           <select class="form-control dark-background" id="menu-item-type">
+                           <select class="form-control-black" id="menu-item-type">
                                 <option value="G">Menu</option>
                                 <option value="M">Menu Item</option>
                          </select>
           		</div>
           		<div>
             			<label for="menu-name" class="col-form-label">Menu Item Text</label>
-				<input type="text" class="form-control dark-background" id="menu-item-text" name="menu-item-text" required>
+				<input type="text" class="form-control-black" id="menu-item-text" name="menu-item-text" required>
           		</div>
       </div>
       <div class="modal-footer">
