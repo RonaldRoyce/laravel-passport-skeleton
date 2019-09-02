@@ -23,7 +23,53 @@ $(document).ready(function () {
   })
 
   $('#save-menu-item-btn').on('click', function () {
-    var a = 1
+    var menuId = $('#menu_id').val()
+    var menuItemId = $('#menu_item_id').val()
+    var menuItemParentId = $('#menu_item_parent_id').val()
+    var menuItemText = $('#menu-item-text').val()
+    var pageId = $('#page-id').val()
+    var anchorUrl = $('#anchor-url').val()
+    var divAnchorName = $('#div-anchor-name').val()
+    var imageClass = $('#image-class').val()
+
+    $.ajax({
+      url: tokenUrl,
+      type: 'GET',
+      success: function (data, textStatus, jqXHR) {
+        var token = data['access_token']
+        $.ajax({
+          url: menuItemSaveUrl,
+          type: 'GET',
+          headers: {
+            Authorization: 'Bearer ' + token,
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          data: {
+            menuitemid: menuItemId,
+            menuitemtext: menuItemText,
+            pageid: pageId,
+            anchorurl: anchorUrl,
+            divanchorname: divAnchorName,
+            imageclass: imageClass
+          },
+          success: function (data, textStatus, jqXHR) {
+            window.location.href =
+              '/menuitems?menu_id=' +
+              menuId +
+              '&menu_item_id=' +
+              menuItemParentId
+            return false
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            return false
+          }
+        })
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        return false
+      }
+    })
   })
   $('#rename-role').on('click', function () {
     roleId = $('#delete-role').data('id')

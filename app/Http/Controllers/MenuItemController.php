@@ -30,11 +30,6 @@ class MenuItemController extends Controller
             $menuItems = MenuItem::where('menu_id', '=', $menuId)->whereNull('menu_item_parent_id')->get();
         }
 
-
-//        $menuItems = MenuItem::where('menu_id', '=', $menuId)->whereNull('menu_item_parent_id')->orderBy('level_order')->get();
-
-
-
         if ($menuItemType == "G") {
             return view('menu.menuitems.index', array('menu_id' => $menuId, 'menuName' => $menu->name, 'menus' => $menuItems, 'menuTrailPath' => $menuTailPath));
         } else {

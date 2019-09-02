@@ -4,7 +4,8 @@
 
 <div class="container">
      <input type="hidden" id="menu_id" value="{{$menu_id}}" />
-
+     <input type="hidden" id="menu_item_id" value="{{$menuItem->menu_item_id}}" />
+     <input type="hidden" id="menu_item_parent_id" value="{{$menuItem->menu_item_parent_id}}" />
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card main-card">
@@ -40,15 +41,15 @@
                        <label for="menu-name" class="col-form-label">Anchor Url</label>
                          <input type="text" class="form-control-black" id="anchor-url" name="anchor-url" value="{{$menuItem->anchor_url}}" required>
                     </div>
-                    @if ($menuItem->menu_item_type == "G")
-                         <div>
-                              <label for="menu-name" class="col-form-label">Anchor Div Id</label>
-                              <input type="text" class="form-control-black" id="anchor-url" name="anchor-url" value="{{$menuItem->anchor_url}}" required>
+                    
+                         <div @if ($menuItem->menu_item_type == "G")style="display: block" @else style="display: none;" @endif >
+                              <label for="div-anchor-name" class="col-form-label">Anchor Div Name</label>
+                              <input type="text" class="form-control-black" id="div-anchor-name" name="div-anchor-name" value="{{$menuItem->div_anchor_name}}" required>
                          </div>
-                    @endif
+
                     <div>
                        <label for="menu-name" class="col-form-label">Image Class</label>
-                         <input type="text" class="form-control-black" id="anchor-url" name="image-class" value="{{$menuItem->image_class}}" required>
+                         <input type="text" class="form-control-black" id="image-class" name="image-class" value="{{$menuItem->image_class}}" required>
                     </div>
                </div>
             <div class="card-footer">
@@ -120,6 +121,7 @@
 	var menuAddUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/menu/add' ?>";
 	var menuEditUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/menuitems' ?>";
      var menuDeleteUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/menu/delete' ?>";
+     var menuItemSaveUrl = "<?php echo env('APP_URL', 'http://localhost') . '/api/menuitem/save' ?>";
      var globalRoleId = "";
      var globalRoleName = "";
 </script>
