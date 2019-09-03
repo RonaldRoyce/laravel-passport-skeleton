@@ -48,8 +48,8 @@ $(document).ready(function () {
   })
 
   $('.edit-menu-btn').on('click', function () {
-    globalMenuId = this.attributes['data-id'].value
-    window.location.href = menuEditUrl + '?menu_id=' + globalMenuId
+    window.location.href =
+      menuEditUrl + '?menu_id=' + this.attributes['data-id'].value
   })
 
   $('.delete-role-btn').on('click', function () {

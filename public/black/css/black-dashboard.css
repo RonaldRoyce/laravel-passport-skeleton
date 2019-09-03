@@ -15433,10 +15433,10 @@ i.tim-icons.icon-zoom-split, i.tim-icons.icon-sound-wave {
 }
 
 .main-panel>.content {
-  padding: 78px 30px 30px 335px;
-  height: calc(100vh - 63px);
+  padding: 5px;
+  height: calc(100vh - 53px);
   position: relative;
-  top: 60px;
+  top: 125px;
 }
 
 .main-panel>.navbar {
@@ -17361,9 +17361,12 @@ Copyright (c) 2015 Daniel Eden
 }
 
 .card .card-body {
-  padding: 15px;
+  padding: 10px;
 }
 
+.card-body-full {
+     height: calc(100vh - 335px);
+}
 .card .card-body.table-full-width {
   padding-left: 0;
   padding-right: 0;
@@ -18145,4 +18148,13 @@ th.menu-action {
      background-color: #3a8ee0;
 }
 
+.cookie-trail-text {
+     font-size: 11pt;
+}
+
+.menu-items-footer-div {
+     margin: auto;
+     text-align: center;
+     width: 245px;
+}
 /*# sourceMappingURL=dashboard-free.css.map */

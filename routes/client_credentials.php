@@ -33,3 +33,5 @@ Route::middleware('client_credentials')->get('/permission/add', 'Api\RoleApiCont
 
 Route::middleware('client_credentials')->get('/menu/add', 'Api\MenuApiController@createMenu')->name('menuadd');
 Route::middleware('client_credentials')->get('/menuitem/save', 'Api\MenuItemApiController@saveMenuItem')->name('menuitemsave');
+Route::middleware('client_credentials')->get('/menuitem/add', 'Api\MenuItemApiController@createMenuItem')->name('menuitemadd');
+Route::middleware('client_credentials')->get('/menuitem/delete', 'Api\MenuItemApiController@deleteMenuItem')->name('menuitemdelete');

@@ -4,110 +4,100 @@
 
 <div class="container">
      <input type="hidden" id="menu_id" value="{{$menu_id}}" />
-
+     <input type="hidden" id="menu_item_id" value="{{$menu_item_id}}" />
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header card-header-slim">
-			<div>
-				<div style="float: left;"><h3 class="slim">Menu Items</h3></div>
-				<div class="slim" style="float: right;"><button class="btn btn-info" data-toggle="modal" data-target="#addMenuItemModal">Add Menu Item</button></div>
-				<div class="clear: both;"></div>
-			</div>
-		</div>
-                <div class="card-body">
-                <div><h3><?php echo $menuTrailPath; ?></h3></div>                     
-			<table class="table table-striped table-bordered">
-				<thead class="thead-light ldap-groups">
-					<tr>
-						<th scope="col" class="menu-text">Text</th>
-						<th scope="col" class="menu-type">Type</th>
-						<th scope="col" class="menu-move">&nbsp;</th>
-						<th scope="col" class="menu-action">Action</th>
-					</tr>
-				</thead>
-				<tbody class="ldap-groups">
-                         <?php
-                         $itemNum = 0;
-                         ?>
-					@foreach ($menus as $menu)
-						<tr>
-							<td class="menu-text"><a href="/menuitems?menu_id={{$menu_id}}&menu_item_id={{$menu->menu_item_id}}">{{$menu->menu_item_text}}</a></td>
-							<td class="menu-type">{{ $menu->menu_item_type == "G" ? "Menu" : "Menu Item" }}</td>
-							<td class="menu-move" style="text-align: center;">
-                                        @if($itemNum < count($menus) - 1)
-                                        <a href="#" class="move-down-btn" data-name="{{$menu->menu_item_text}}" data-id="{{$menu->menu_item_id}}"><i class="fa fa-arrow-alt-circle-down" style="color: green;font-size: 39px;"></i></a>
-                                        @endif
-                                        @if($itemNum > 0)
-                                        <a href="#" class="move-up-btn" data-name="{{$menu->menu_item_text}}" data-id="{{$menu->menu_item_id}}"><i class="fa fa-arrow-alt-circle-up" style="color: red;font-size: 39px;"></i></a>
-                                        @endif
-                                   </td>
-							<td class="menu-action"><button type="button" class="btn btn-primary edit-menu-btn" data-name="{{$menu->menu_item_text}}" data-id="{{$menu->menu_item_id}}">Edit</button>&nbsp;<button type="button" class="btn btn-danger delete-menu-btn" data-name="{{$menu->menu_item_text}}" data-id="{{$menu->menu_item_id}}">Delete</button></td>
+                    <div>
+                         <div style="float: left;"><h3 class="slim">Menu Items</h3></div>
+                         <div class="clear: both;"></div>
+                    </div>
+               </div>
+                <div class="card-body card-body-full">
+                    <div><h3  class="cookie-trail-text"><?php echo '<div style="float: left;">' . $menuTrailPath . '</div><div style="clear: both;"></div>'; ?></h3></div> 
+                    
+                    @if ($menuItem)
+                    <div>
+                       <label for="menu-name" class="col-form-label">Text</label>
+                         <input type="text" class="form-control-black" id="menu-item-text" name="menu-item-text" value="{{$menuItem->menu_item_text}}" required>
+                    </div>
+                    <div>
+                       <label for="menu-name" class="col-form-label">Page Id</label>
+                         <input type="text" class="form-control-black" id="page-id" name="page-id" value="{{$menuItem->page_id}}" required>
+                    </div>
+                    <div @if ($menuItem->menu_item_type == "M")style="display: block" @else style="display: none;" @endif >
+                       <label for="menu-name" class="col-form-label">Anchor Url&nbsp;{{$menuItem->menu_item_type}}</label>
+                         <input type="text" class="form-control-black" id="anchor-url" name="anchor-url" value="{{$menuItem->anchor_url}}" required>
+                    </div>
+                    
+                         <div @if ($menuItem->menu_item_type == "G")style="display: block" @else style="display: none;" @endif >
+                              <label for="div-anchor-name" class="col-form-label">Anchor Div Name</label>
+                              <input type="text" class="form-control-black" id="div-anchor-name" name="div-anchor-name" value="{{$menuItem->div_anchor_name}}" required>
+                         </div>
+
+                    <div style="margin-bottom: 20px;">
+                       <label for="menu-name" class="col-form-label">Image Class</label>
+                         <input type="text" class="form-control-black" id="image-class" name="image-class" value="{{$menuItem->image_class}}" required>
+                    </div>
+
+
+                    <div class="slim" style="width: 45px;margin:auto;margin-bottom: 20px;"><button id="save-menu-item-details-btn" class="btn btn-danger">Save</button></div>
+                    <div id="save-message-div" class="alert" role="alert" style="display: none;"></div>
+
+                    @endif
+
+                    <table class="table table-striped table-bordered">
+                         <thead class="thead-light ldap-groups">
+                              <tr>
+                                   <th scope="col" class="menu-text">Text</th>
+                                   <th scope="col" class="menu-type">Type</th>
+                                   <th scope="col" class="menu-move">&nbsp;</th>
+                                   <th scope="col" class="menu-action">Action</th>
                               </tr>
+                         </thead>
+                         <tbody class="ldap-groups" style="max-height: calc(100vh - 258px);overflow-y: auto;">
                               <?php
-                                   $itemNum++;
+                              $itemNum = 0;
                               ?>
-					@endforeach
-				</tbody>
-			</table>
+                              @foreach ($menus as $menu)
+                                   <tr>
+
+                                        <td class="menu-text"><a href="/menuitems?menu_id={{$menu_id}}&menu_item_id={{$menu->menu_item_id}}">{{$menu->menu_item_text}}</a></td>
+                                        <td class="menu-type">{{ $menu->menu_item_type == "G" ? "Menu" : "Menu Item" }}</td>
+                                        <td class="menu-move" style="text-align: center;">
+                                             @if($itemNum < count($menus) - 1)
+                                             <a href="#" class="move-down-btn" data-name="{{$menu->menu_item_text}}" data-id="{{$menu->menu_item_id}}"><i class="fa fa-arrow-alt-circle-down" style="color: green;font-size: 39px;"></i></a>
+                                             @endif
+                                             @if($itemNum > 0)
+                                             <a href="#" class="move-up-btn" data-name="{{$menu->menu_item_text}}" data-id="{{$menu->menu_item_id}}"><i class="fa fa-arrow-alt-circle-up" style="color: red;font-size: 39px;"></i></a>
+                                             @endif
+                                        </td>
+                                        <td class="menu-action"><button type="button" class="btn btn-primary edit-menu-item-btn" data-name="{{$menu->menu_item_text}}" data-id="{{$menu->menu_item_id}}">Edit</button>&nbsp;<button type="button" class="btn btn-danger delete-menu-item-btn" data-name="{{$menu->menu_item_text}}" data-id="{{$menu->menu_item_id}}">Delete</button></td>
+                                   </tr>
+                                   <?php
+                                        $itemNum++;
+                                   ?>
+                              @endforeach
+                         </tbody>
+                    </table>
                 </div>
+                <div class="card-footer">
+                     <div class="menu-items-footer-div">
+                         <div class="slim" style="text-align: center;margin: auto;float: left;"><button id="add-menu-btn" class="btn btn-primary" data-toggle="modal" data-target="#addMenuModal">Add Menu</button></div>
+                         <div class="slim" style="text-align: center;margin: auto;float: left;"><button id-="add-menu-item-btn" class="btn btn-info" data-toggle="modal" data-target="#addMenuItemModal">Add Menu Item</button></div>
+                         <div style="clear: both;"></div>
+                    </div>
+               </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="addMenuItemModal" tabindex="-1" menu="dialog" aria-labelledby="addMenuItemLabel" aria-hidden="true">
-  <div class="modal-dialog" menu="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addMenuItemLabel">Add Menu Item</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          		<div>
-                           <label for="menu-id" class="col-form-label">Menu Item Type</label>
-                           <select class="form-control dark-background" id="menu-item-type">
-                                <option value="G">Menu</option>
-                                <option value="M">Menu Item</option>
-                         </select>
-          		</div>
-          		<div>
-            			<label for="menu-name" class="col-form-label">Menu Item Text</label>
-				<input type="text" class="form-control dark-background" id="menu-item-text" name="menu-item-text" required>
-          		</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="addmenu-btn" type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+@include('partials.menu.menu')
+@include('partials.menu.menuitem')
 
-<div class="modal fade" id="deleteRoleModal" tabindex="-1" menu="dialog" aria-labelledby="addRoleLabel" aria-hidden="true">
-  <div class="modal-dialog" menu="document">
-    <div class="modal-content">
-      <input type="hidden" id="delete-menuid" name="delete-menuid" />
-      <div class="modal-header">
-        <h2 class="modal-title" id="addRoleModalLabel">Delete User Role</h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <input type="hidden" id="menu-id" />
-      <div class="modal-body">
-                        <div>Are you sure you wish to delete the menu: <span id="menu-name" style="font-weight: bold;"></span></div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        <button type="button" id="execute-delete-menu-btn" class="btn btn-danger">Delete</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 @endsection
 
@@ -115,10 +105,12 @@
 <script style="text/javascript">
 	var tokenUrl = "<?php echo env('APP_URL', 'http://localhost') . '/token' ?>";
 	var menuAddUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/menu/add' ?>";
+     var menuItemSaveDetailsUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/menuitem/save' ?>";
+     var menuItemAddUrl = "<?php echo env('APP_URL', 'http://localhost') . '/api/menuitem/add' ?>";
 	var menuEditUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/menuitems' ?>";
-     var menuDeleteUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/menu/delete' ?>";
-     var globalRoleId = "";
-     var globalRoleName = "";
+     var menuItemDeleteUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/menuitem/delete' ?>";
+     var globalMenuItemText = "";
+     var globalMenuItemId = "";
 </script>
 
 <script style="text/javascript" src="/js/menuitem.js"></script>

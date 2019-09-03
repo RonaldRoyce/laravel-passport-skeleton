@@ -25,6 +25,7 @@ class CreateMenuItemsTable extends Migration
             $table->striing('anchor_url', 50);
             $table->string('image_class', 100);
 
+            $table->unique('menu_item_parent_id', 'menu_item_text');
             $table->foreign('menu_item_parent_id')->references('menu_item_id')->on('menu_items');
             $table->foreign('menu_id')->references('menu_id')->on('menu_id');
         });

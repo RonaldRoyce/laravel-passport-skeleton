@@ -28,10 +28,19 @@ class MenuItem extends Model
             $parentMenuItem = MenuItem::where('menu_item_id', '=', $this->getAttributes()["menu_item_parent_id"])->get()->first();
 
 
-            return '<a href="/menuitems?menu_id=' . $parentMenuItem->menu_id . '&menu_item_id=' . $parentMenuItem->getAttributes()["menu_item_id"] . '" style="color: #3b8ee0;">' . $parentMenuItem->getNavTrailPath() . "</a> / " . $thisTrail;
+            return '<a href="/menuitems?menu_id=' . $parentMenuItem->menu_id . '&menu_item_id=' . $parentMenuItem->getAttributes()["menu_item_id"] . '" style="color: #3b8ee0;"  class="cookie-trail-text">' . $parentMenuItem->getNavTrailPath() . "</a> / " . $thisTrail;
         }
 
         return $this->getAttributes()["menu_item_text"];
+    }
+
+    public function parentMenuItem()
+    {
+        if ($this->getAttributes()["menu_item_parent_id"]) {
+            return MenuItem::where('menu_item_id', '=', $this->getAttributes()["menu_item_parent_id"])->get()->first();
+        }
+
+        return null;
     }
 
     public function submenuItems()

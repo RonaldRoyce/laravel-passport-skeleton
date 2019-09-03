@@ -28,7 +28,7 @@
 					@foreach ($menus as $menu)
 						<tr>
 							<td class="menu-text">{{$menu->name}}</td>
-							<td class="menu-action"><button type="button" class="btn btn-primary edit-menu-btn" data-id="{{$menu->menu_id}}">Edit</button>&nbsp;<button type="button" class="btn btn-danger delete-menu-btn" data-name="{{$menu->name}}" data-id="{{$menu->menu_id}}">Delete</button></td>
+							<td class="menu-action"><button type="button" class="btn btn-primary edit-menu-item-btn" data-id="{{$menu->menu_id}}">Edit</button>&nbsp;<button type="button" class="btn btn-danger delete-menu-item-btn" data-name="{{$menu->name}}" data-id="{{$menu->menu_id}}">Delete</button></td>
                               </tr>
                               <?php
                                    $itemNum++;
@@ -66,23 +66,23 @@
   </div>
 </div>
 
-<div class="modal fade" id="deleteRoleModal" tabindex="-1" menu="dialog" aria-labelledby="addRoleLabel" aria-hidden="true">
+<div class="modal fade" id="deleteMenuItemModal" tabindex="-1" menu="dialog" aria-labelledby="deleteMenuItemLabel" aria-hidden="true">
   <div class="modal-dialog" menu="document">
     <div class="modal-content">
       <input type="hidden" id="delete-menuid" name="delete-menuid" />
       <div class="modal-header">
-        <h2 class="modal-title" id="addRoleModalLabel">Delete User Role</h2>
+        <h2 class="modal-title" id="deleteMenuItemModalLabel">Delete Menu Item</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <input type="hidden" id="menu-id" />
+      <input type="hidden" id="delete-menu-item-id" />
       <div class="modal-body">
-                        <div>Are you sure you wish to delete the menu: <span id="menu-name" style="font-weight: bold;"></span></div>
+                        <div>Are you sure you wish to delete the menu: <span id="delete-menu-item-text" style="font-weight: bold;"></span></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        <button type="button" id="execute-delete-menu-btn" class="btn btn-danger">Delete</button>
+        <button type="button" id="execute-delete-menu-item-btn" class="btn btn-danger">Delete</button>
       </div>
     </div>
   </div>
@@ -93,9 +93,10 @@
 @push('view-scripts')
 <script style="text/javascript">
 	var tokenUrl = "<?php echo env('APP_URL', 'http://localhost') . '/token' ?>";
-	var menuAddUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/menu/add' ?>";
+     var menuAddUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/menu/add' ?>";
+     var menuItemAddUrl = "<?php echo env('APP_URL', 'http://localhost') . '/api/menuitem/add' ?>";
 	var menuEditUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/menuitems' ?>";
-     var menuDeleteUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/menu/delete' ?>";
+     var menuItemDeleteUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/menuitem/delete' ?>";
 </script>
 
 <script style="text/javascript" src="/js/menu.js"></script>

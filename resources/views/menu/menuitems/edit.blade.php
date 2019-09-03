@@ -17,7 +17,7 @@
                     </div>
                 </div>
                <div class="card-body view-table">
-                    <div><h3><?php echo $menuTrailPath; ?></h3></div>                     
+                    <div><h3 class="cookie-trail-text"><?php echo $menuTrailPath; ?></h3></div>                     
                     <div>
                            <label for="menu-id" class="col-form-label">Type</label>
                            <select class="form-control-black" id="menu-item-type" disabled>
@@ -37,7 +37,7 @@
                        <label for="menu-name" class="col-form-label">Page Id</label>
                          <input type="text" class="form-control-black" id="page-id" name="page-id" value="{{$menuItem->page_id}}" required>
                     </div>
-                    <div>
+                    <div @if ($menuItem->menu_item_type == "M")style="display: block" @else style="display: none;" @endif >
                        <label for="menu-name" class="col-form-label">Anchor Url</label>
                          <input type="text" class="form-control-black" id="anchor-url" name="anchor-url" value="{{$menuItem->anchor_url}}" required>
                     </div>
@@ -53,7 +53,7 @@
                     </div>
                </div>
             <div class="card-footer">
-               <div class="slim" style="float: left;"><button id="cancel-save-btn" class="btn btn-danger" data-toggle="modal" data-target="#addMenuItemModal">Cancel</button></div>
+               <div class="slim" style="float: left;"><button id="cancel-save-btn" class="btn btn-danger">Cancel</button></div>
                <div class="slim" style="float: right;"><button id="save-menu-item-btn" class="btn btn-info">Save</button></div>
             </div>
         </div>
@@ -122,6 +122,12 @@
 	var menuEditUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/menuitems' ?>";
      var menuDeleteUrl =  "<?php echo env('APP_URL', 'http://localhost') . '/api/menu/delete' ?>";
      var menuItemSaveUrl = "<?php echo env('APP_URL', 'http://localhost') . '/api/menuitem/save' ?>";
+     var previousMenuItemUrl = "<?php if ($previousMenuItem) {
+    echo env('APP_URL', 'http://localhost') . '/menuitems?menu_id=' . $menu_id . "&menu_item_id=" .
+                                   $previousMenuItem->menu_item_id;
+} else {
+    echo env('APP_URL', 'http://localhost') . '/menuitems?menu_id=' . $menu_id;
+} ?>";
      var globalRoleId = "";
      var globalRoleName = "";
 </script>

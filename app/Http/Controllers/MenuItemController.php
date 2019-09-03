@@ -21,19 +21,25 @@ class MenuItemController extends Controller
 
         if ($menuItemId != '') {
             $menuItem = MenuItem::where('menu_id', '=', $menuId)->where('menu_item_id', '=', $menuItemId)->get()->first();
+            $previousMenuItem = $menuItem->parentMenuItem();
             $menuItemType = $menuItem->menu_item_type;
             $menuItems = $menuItem->submenuItems;
-            $menuTailPath = '<a href="/menus">Menus</a> / <a href="/menuitem/menu_id=' . $menu->menu_id . '">' . $menu->name . '</a>' . ' / ' . $menuItem->getNavTrailPath();
+            $menuItemId = $menuItem->menu_item_id;
+            $menuTailPath = '<a href="/menus" class="cookie-trail-text">Menus</a> / <a href="/menuitems?menu_id=' . $menu->menu_id . '"  class="cookie-trail-text">' . $menu->name . '</a>' . ' / ' . $menuItem->getNavTrailPath();
         } else {
-            $menuTailPath = '<a href="/menus">Menus</a> / ' . $menu->name;
+            $menuTailPath = '<a href="/menus"  class="cookie-trail-text">Menus</a> / ' . $menu->name;
             $menuItemType = "G";
-            $menuItems = MenuItem::where('menu_id', '=', $menuId)->whereNull('menu_item_parent_id')->get();
+            $menuItemId = 0;
+            $menuItem = null;
+            $menuItems = MenuItem::where('menu_id', '=', $menuId)->whereNull('menu_item_parent_id')->orderBy('level_order')->get();
+
+            $previousMenuItem = null;
         }
 
         if ($menuItemType == "G") {
-            return view('menu.menuitems.index', array('menu_id' => $menuId, 'menuName' => $menu->name, 'menus' => $menuItems, 'menuTrailPath' => $menuTailPath));
+            return view('menu.menuitems.index', array('menu_id' => $menuId, 'menuName' => $menu->name, 'menuItem' => $menuItem, 'menu_item_id' => $menuItemId, 'menus' => $menuItems, 'menuTrailPath' => $menuTailPath, "previousMenuItem" =>$previousMenuItem));
         } else {
-            return view('menu.menuitems.edit', array('menu_id' => $menuId, 'menuName' => $menu->name, 'menuItem' => $menuItem, 'menus' => $menuItems, 'menuTrailPath' => $menuTailPath));
+            return view('menu.menuitems.edit', array('menu_id' => $menuId, 'menuName' => $menu->name, 'menuItem' => $menuItem, 'menu_item_id' => $menuItemId, 'menus' => $menuItems, 'menuTrailPath' => $menuTailPath, "previousMenuItem" =>$previousMenuItem));
         }
     }
 }

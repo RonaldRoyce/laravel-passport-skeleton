@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\MenuItem;
 use Illuminate\Http\Request;
+use \Exception;
+use Illuminate\Support\Facades\DB;
 
 class MenuItemApiController extends Controller
 {
@@ -31,6 +33,116 @@ class MenuItemApiController extends Controller
         return array("success" => true, "message" => "", "data" => array("id" =>$id));
     }
 
+    public function createMenuItem(Request $request)
+    {
+        $queryString = $request->all();
+
+        $menuId = $queryString['menuid'];
+        $menuItemParentId = $queryString['menuitemparentid'];
+
+        if ($menuItemParentId == 0) {
+            $menuItemParentId = null;
+        }
+
+
+        $menuItemText = $queryString['menuitemtext'];
+        $menuItemType = $queryString['menuitemtype'];
+        $pageId = $queryString['pageid'];
+        $anchorUrl = $queryString['anchorurl'];
+        $divAnchorName = $queryString['divanchorname'];
+        $imageClass = $queryString['imageclass'];
+
+        if ($menuItemParentId) {
+            $menuItem = MenuItem::where('menu_item_parent_id', '=', $menuItemParentId)->where('menu_item_text', '=', $menuItemText)->get()->first();
+          
+            if ($menuItem) {
+                return array("success" => false, "message" => "Menu already contains an item with text '" . $menuItemText . "'");
+            }
+
+            if ($menuItemType == "G") {
+                $menuItem = MenuItem::where('menu_item_parent_id', '=', $menuItemParentId)->where('div_anchor_name', '=', $divAnchorName)->get()->first();
+                if ($menuItem) {
+                    return array("success" => false, "message" => "Menu already contains an item with div anchor name '" . $divAnchorName . "'");
+                }
+            } else {
+                $menuItem = MenuItem::where('menu_item_parent_id', '=', $menuItemParentId)->where('anchor_url', '=', $anchorUrl)->get()->first();
+                if ($menuItem) {
+                    return array("success" => false, "message" => "Menu already contains an item with anchor url '" . $anchorUrl . "'");
+                }
+            }
+
+            $menuItem = MenuItem::where('menu_item_parent_id', '=', $menuItemParentId)->where('page_id', '=', $pageId)->get()->first();
+            if ($menuItem) {
+                return array("success" => false, "message" => "Menu already contains an item with page id '" . $pageId . "'");
+            }
+        } else {
+            $menuItem = MenuItem::whereNULL('menu_item_parent_id')->where('menu_item_text', '=', $menuItemText)->get()->first();
+          
+            if ($menuItem) {
+                return array("success" => false, "message" => "Menu already contains an item with text '" . $menuItemText . "'");
+            }
+
+            if ($menuItemType == "G") {
+                $menuItem = MenuItem::whereNULL('menu_item_parent_id')->where('div_anchor_name', '=', $divAnchorName)->get()->first();
+                if ($menuItem) {
+                    return array("success" => false, "message" => "Menu already contains an item with div anchor name '" . $divAnchorName . "'");
+                }
+            } else {
+                $menuItem = MenuItem::whereNULL('menu_item_parent_id')->where('anchor_url', '=', $anchorUrl)->get()->first();
+                if ($menuItem) {
+                    return array("success" => false, "message" => "Menu already contains an item with anchor url '" . $anchorUrl . "'");
+                }
+            }
+
+            $menuItem = MenuItem::whereNULL('menu_item_parent_id')->where('page_id', '=', $pageId)->get()->first();
+            if ($menuItem) {
+                return array("success" => false, "message" => "Menu already contains an item with page id '" . $pageId . "'");
+            }
+        }
+
+        $menuItem = new MenuItem();
+
+        $menuItem->menu_id = $menuId;
+        $menuItem->menu_item_text = $menuItemText;
+        $menuItem->menu_item_type = $menuItemType;
+        $menuItem->menu_item_parent_id = $menuItemParentId;
+
+        $menuItem->page_id = $pageId;
+        if ($menuItem->menu_item_type == "G") {
+            $menuItem->anchor_url = '';
+            $menuItem->div_anchor_name = $divAnchorName;
+        } else {
+            $menuItem->anchor_url = $anchorUrl;
+            $menuItem->div_anchor_name = '';
+        }
+
+        if (!$menuItemParentId) {
+            //  Get next level order for top level menu
+
+            $lastMenuItem = MenuItem::whereNULL('menu_item_parent_id')->orderBy('level_order', 'desc')->get()->first();
+            if (!$lastMenuItem) {
+                $menuLevelOrder = 1;
+            } else {
+                $menuLevelOrder = $lastMenuItem->level_order + 1;
+            }
+        } else {
+            //  Get next level order for non top level menu
+
+            $lastMenuItem = MenuItem::where('menu_item_id', '=', $menuItemParentId)->orderBy('level_order', 'desc')->get()->first();
+            if (!$lastMenuItem) {
+                $menuLevelOrder = 1;
+            } else {
+                $menuLevelOrder = $lastMenuItem->level_order + 1;
+            }
+        }
+        $menuItem->level_order = $menuLevelOrder;
+        $menuItem->image_class = $imageClass;
+
+        $menuItem->save();
+
+        return array("success" => true, "message" => "", "data" => array("menu_item_id" => $menuItem->menu_item_id));
+    }
+
     public function saveMenuItem(Request $request)
     {
         $queryString = $request->all();
@@ -46,12 +158,55 @@ class MenuItemApiController extends Controller
 
         $menuItem->menu_item_text = $menuItemText;
         $menuItem->page_id = $pageId;
-        $menuItem->anchor_url = $anchorUrl;
-        $menuItem->div_anchor_name = $divAnchorName;
+        if ($menuItem->menu_item_type == "G") {
+            $menuItem->anchor_url = '';
+            $menuItem->div_anchor_name = $divAnchorName;
+        } else {
+            $menuItem->anchor_url = $anchorUrl;
+            $menuItem->div_anchor_name = '';
+        }
+
         $menuItem->image_class = $imageClass;
 
         $menuItem->save();
 
         return array("success" => true, "message" => "", "data" => null);
+    }
+
+    public function deleteMenuItem(Request $request)
+    {
+        $queryString = $request->all();
+        
+
+        $menuItemId = $queryString['menuitemid'];
+
+        $menuItem = MenuItem::where('menu_item_id', '=', $menuItemId)->get()->first();
+
+        if (!$menuItem) {
+            return array("success" => true, "message" => "");
+        }
+
+ 
+        $menuItemLevelOrder = $menuItem->level_order;
+        $menuItemParentId = $menuItem->menu_item_parent_id;
+   
+        try {
+            DB::beginTransaction();
+            MenuItem::where('menu_item_id', '=', $menuItemId)->delete();
+
+            if ($menuItemParentId) {
+                MenuItem::where('menu_item_parent_id', '=', $menuItemParentId)->where('level_order' > $menuItemLevelOrder)
+               ->update(['level_order' => DB::raw("level_order - 1")]);
+            } else {
+                MenuItem::whereNULL('menu_item_parent_id')->where('level_order', '>', $menuItemLevelOrder)
+               ->update(['level_order' => DB::raw("level_order - 1")]);
+            }
+            DB::commit();
+        } catch (Exception $ex) {
+            DB::rollback();
+            return array("success" => false, "message" => $ex->getMessage());
+        }
+
+        return array("success" => true, "message" => "");
     }
 }
