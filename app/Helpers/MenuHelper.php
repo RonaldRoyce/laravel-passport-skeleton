@@ -53,7 +53,7 @@ class MenuHelper
                               <span class="nav-link-text" >%s</span>
                               </a>
                               <div class="collapse show submenu-div" id="%s">
-                                   <ul class="nav pl-4">
+                                   <ul class="nav">
                          ',
             $divAnchorName,
             $topLevelImageClass,

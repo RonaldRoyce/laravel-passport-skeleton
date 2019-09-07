@@ -200,21 +200,33 @@ class MenuItemApiController extends Controller
         $menuItemLevelOrder = $menuItem->level_order;
         $menuItemParentId = $menuItem->menu_item_parent_id;
    
+        $dbg = "";
+
         try {
             DB::beginTransaction();
+
+            $dbg = "1 - Deleting where menu_item_id = $menuItemId <br>";
+
             MenuItem::where('menu_item_id', '=', $menuItemId)->delete();
 
+            $dbg .= "2 - Done deleting <br>";
+
             if ($menuItemParentId) {
-                MenuItem::where('menu_item_parent_id', '=', $menuItemParentId)->where('level_order' > $menuItemLevelOrder)
-               ->update(['level_order' => DB::raw("level_order - 1")]);
+                $dbg .= "3 - Updating to level order - 1 where menu_item_parent_id = $menuItemParentId and level order > $menuItemLevelOrder <br>";
+                MenuItem::where('menu_item_parent_id', '>', $menuItemParentId)
+                    ->where('level_order', '=', $menuItemLevelOrder)
+                    ->update(['level_order' => DB::raw("level_order - 1")]);
+                $dbg .= "4 - Done updating<br>";
             } else {
+                $dbg .= "5 - Updating to level order - 1 where menu_parent_id IS NULL and level order > $menuItemLevelOrder <br>";
                 MenuItem::whereNULL('menu_item_parent_id')->where('level_order', '>', $menuItemLevelOrder)
                ->update(['level_order' => DB::raw("level_order - 1")]);
+                $dbg .= "6 - Done updating<br>";
             }
             DB::commit();
         } catch (Exception $ex) {
             DB::rollback();
-            return array("success" => false, "message" => $ex->getMessage());
+            return array("success" => false, "message" => $ex->getMessage(), "debug" => $dbg);
         }
 
         return array("success" => true, "message" => "");
@@ -240,22 +252,20 @@ class MenuItemApiController extends Controller
 
         if ($menuItemParentId) {
             $lastLevelOrder =  MenuItem::where('menu_item_parent_id', '=', $menuItemParentId)->orderBy('level_order', 'desc')->get()->first()->level_order;
-            if ($lastLevelOrder == $menuItemLevelOrder) {
-                return array("success" => true, "message" => "");
-            }
         } else {
-            $lastLevelOrder =  MenuItem::whereNULL('menu_item_parent_id')->orderBy('level_order', 'desc')->get()->first();
-            if ($lastLevelOrder == $menuItemLevelOrder) {
-                return array("success" => true, "message" => "");
-            }
+            $lastLevelOrder =  MenuItem::whereNULL('menu_item_parent_id')->orderBy('level_order', 'desc')->get()->first()->level_order;
         }
 
-        //  This is not the last item
+        if ($lastLevelOrder == $menuItemLevelOrder) {
+            return array("success" => true, "message" => "");
+        }
 
         try {
             DB::beginTransaction();
 
             //  Set the item to move's level order to zero to make room for updating other items in menu
+
+            $dbg = "Updating to 0 where menu_item_id = $menuItemId <br>";
 
             MenuItem::where('menu_item_id', '=', $menuItemId)
             ->update(['level_order' => 0]);
@@ -263,22 +273,27 @@ class MenuItemApiController extends Controller
             //  Set the item who will now be the level order of the item
 
             if ($menuItemParentId) {
+                $dbg .= "Updating to " . ($menuItemLevelOrder) . " where menu_item_parent_id = $menuItemParentId and level_order = " . ($menuItemLevelOrder + 1) . "<br>";
                 MenuItem::where('menu_item_parent_id', '=', $menuItemParentId)->where('level_order', '=', $menuItemLevelOrder + 1)
                ->update(['level_order' => $menuItemLevelOrder]);
             } else {
+                $dbg .= "Updating to " . ($menuItemLevelOrder) . " where menu_item_parent_id IS NULL and level_order = " . ($menuItemLevelOrder + 1) . "<br>";
                 MenuItem::whereNULL('menu_item_parent_id')->where('level_order', '=', $menuItemLevelOrder + 1)
                ->update(['level_order' => $menuItemLevelOrder]);
             }
+
+            $dbg .= "Updating to " . ($menuItemLevelOrder + 1) . " where menu_item_id = $menuItemId <br>";
+
             MenuItem::where('menu_item_id', '=', $menuItemId)
             ->update(['level_order' => $menuItemLevelOrder + 1]);
 
             DB::commit();
         } catch (Exception $ex) {
             DB::rollback();
-            return array("success" => false, "message" => $ex->getMessage());
+            return array("success" => false, "message" => $ex->getMessage(), "debug" => $dbg);
         }
 
-        return array("success" => true, "message" => "");
+        return array("success" => true, "message" => "", "debug" => $dbg);
     }
     
     public function moveUp(Request $request)
@@ -296,48 +311,43 @@ class MenuItemApiController extends Controller
         $menuItemLevelOrder = $menuItem->level_order;
         $menuItemParentId = $menuItem->menu_item_parent_id;
 
-        //  If this item is the last one, do nothing
-
-        if ($menuItemParentId) {
-            $lastLevelOrder =  MenuItem::where('menu_item_parent_id', '=', $menuItemParentId)->orderBy('level_order', 'desc')->get()->first();
-            if ($lastLevelOrder == $menuItemLevelOrder) {
-                return array("success" => true, "message" => "");
-            }
-        } else {
-            $lastLevelOrder =  MenuItem::whereNULL('menu_item_parent_id')->orderBy('level_order', 'desc')->get()->first();
-            if ($lastLevelOrder == $menuItemLevelOrder) {
-                return array("success" => true, "message" => "");
-            }
+        if ($menuItemLevelOrder == "1") {
+            return array("success" => true, "message" => "");
         }
 
-        //  This is not the last item
+        $dbg = "";
 
         try {
             DB::beginTransaction();
 
             //  Set the item to move's level order to zero to make room for updating other items in menu
 
-            MenuItem::where('menu_item_id', '=', $menuItemId)
-         ->update(['level_order' => 0]);
+            $dbg = "Updating to 0 where level_order = " . ($menuItemLevelOrder - 1) . "<br>";
+            
+            MenuItem::where('menu_item_parent_id', '=', $menuItemParentId)->where('level_order', '=', $menuItemLevelOrder - 1)
+          ->update(['level_order' => 0]);
 
             //  Set the item who will now be the level order of the item
 
             if ($menuItemParentId) {
-                MenuItem::where('menu_item_parent_id', '=', $menuItemParentId)->where('level_order', '=', $menuItemLevelOrder + 1)
-            ->update(['level_order' => $menuItemLevelOrder]);
+                $dbg .= "Updating to " . ($menuItemLevelOrder - 1) . " where level_order = " . ($menuItemLevelOrder) . "<br>";
+                MenuItem::where('menu_item_parent_id', '=', $menuItemParentId)->where('level_order', '=', $menuItemLevelOrder)
+             ->update(['level_order' => $menuItemLevelOrder - 1]);
             } else {
-                MenuItem::whereNULL('menu_item_parent_id')->where('level_order', '=', $menuItemLevelOrder + 1)
-            ->update(['level_order' => $menuItemLevelOrder]);
+                MenuItem::whereNULL('menu_item_parent_id')->where('level_order', '=', $menuItemLevelOrder)
+             ->update(['level_order' => $menuItemLevelOrder - 1]);
             }
-            MenuItem::where('menu_item_id', '=', $menuItemId)
-         ->update(['level_order' => menuItemLevelOrder + 1]);
+            $dbg .= "Updating to $menuItemLevelOrder where level_order = 0<br>";
+            MenuItem::where('menu_item_parent_id', '=', $menuItemParentId)->where('level_order', '=', 0)
+          ->update(['level_order' => $menuItemLevelOrder]);
 
             DB::commit();
         } catch (Exception $ex) {
             DB::rollback();
-            return array("success" => false, "message" => $ex->getMessage());
+            return array("success" => false, "message" => $ex->getMessage(), "debug" => $dbg);
         }
 
-        return array("success" => true, "message" => "");
+
+        return array("success" => true, "message" => "", "debug" => $dbg);
     }
 }

@@ -101,7 +101,7 @@ $(document).ready(function () {
   $('.move-up-btn').on('click', function () {
     var menuItemId = this.attributes['data-id'].value
     var levelOrder = parseInt(this.attributes['data-level-order'].value, 10)
-    var nextLevelOrder = parseInt(levelOrder, 10) + 1
+    var prevLevelOrder = parseInt(levelOrder, 10) - 1
     var totalItems = $('#menu-items-table tr').length - 1
 
     $.ajax({
@@ -123,7 +123,7 @@ $(document).ready(function () {
           success: function (data, textStatus, jqXHR) {
             if (data.success) {
               var thisItem = $('tr[data-level-order="' + levelOrder + '"]')
-              var nextItem = $('tr[data-level-order="' + nextLevelOrder + '"]')
+              var prevItem = $('tr[data-level-order="' + prevLevelOrder + '"]')
 
               var thisAnchor = thisItem.find('td:eq(2)').find('a')
 
@@ -131,7 +131,7 @@ $(document).ready(function () {
 
               thisAnchor[0].attributes[
                 'data-level-order'
-              ].value = nextLevelOrder
+              ].value = prevLevelOrder
 
               var thisImage = thisItem.find('td:eq(2)').find('i')
 
@@ -141,32 +141,32 @@ $(document).ready(function () {
                 .addClass('fa-arrow-alt-circle-up')
                 .addClass('up-arrow')
 
-              var nextAnchor = nextItem.find('td:eq(2)').find('a')
+              var prevAnchor = prevItem.find('td:eq(2)').find('a')
 
-              nextAnchor.removeClass('move-up-btn').addClass('move-down-btn')
+              prevAnchor.removeClass('move-up-btn').addClass('move-down-btn')
 
-              nextAnchor[0].attributes['data-level-order'].value = levelOrder
+              prevAnchor[0].attributes['data-level-order'].value = levelOrder
 
-              var nextImage = nextItem.find('td:eq(2)').find('i')
+              var prevImage = prevItem.find('td:eq(2)').find('i')
 
-              nextImage
+              prevImage
                 .removeClass('fa-arrow-alt-circle-up')
                 .removeClass('up-arrow')
                 .addClass('fa-arrow-alt-circle-down')
                 .addClass('down-arrow')
 
               thisItem = $('tr[data-level-order="' + levelOrder + '"]')
-              nextItem = $('tr[data-level-order="' + nextLevelOrder + '"]')
+              prevItem = $('tr[data-level-order="' + prevLevelOrder + '"]')
 
               thisItem.remove()
 
-              thisItem.insertAfter(nextItem)
+              thisItem.insertBefore(prevItem)
 
               thisItem = $('tr[data-level-order="' + levelOrder + '"]')
-              nextItem = $('tr[data-level-order="' + nextLevelOrder + '"]')
+              prevItem = $('tr[data-level-order="' + prevLevelOrder + '"]')
 
-              thisItem[0].attributes['data-level-order'].value = nextLevelOrder
-              nextItem[0].attributes['data-level-order'].value = levelOrder
+              thisItem[0].attributes['data-level-order'].value = prevLevelOrder
+              prevItem[0].attributes['data-level-order'].value = levelOrder
 
               window.location.reload(true)
             } else {
@@ -417,11 +417,12 @@ $(document).ready(function () {
             imageclass: imageClass
           },
           success: function (data, textStatus, jqXHR) {
-            window.location.href =
-              '/menuitems?menu_id=' +
-              menuId +
-              '&menu_item_id=' +
-              menuItemParentId
+            if (menuItemId != 0) {
+              window.location.href =
+                '/menuitems?menu_id=' + menuId + '&menu_item_id=' + menuItemId
+            } else {
+              window.location.href = '/menuitems?menu_id=' + menuId
+            }
             return false
           },
           error: function (jqXHR, textStatus, errorThrown) {
@@ -503,9 +504,8 @@ $(document).ready(function () {
                 $('#delete-message-div').html(data.message)
 
                 $('#delete-message-div').show()
-                setTimeout(function () {
-                  $('#delete-message-div').hide()
-                }, 5000)
+
+                return
               }
               if ($('#menu_item_id').val() != '0') {
                 window.location.href =
