@@ -128,7 +128,13 @@ class MenuItemApiController extends Controller
         } else {
             //  Get next level order for non top level menu
 
-            $lastMenuItem = MenuItem::where('menu_item_id', '=', $menuItemParentId)->orderBy('level_order', 'desc')->get()->first();
+            // echo "Getting level order for menu parent id $menuItemParentId<br>";
+          
+
+            // Your Eloquent query
+            
+            $lastMenuItem = MenuItem::where('menu_item_parent_id', '=', $menuItemParentId)->orderBy('level_order', 'desc')->get()->first();
+
             if (!$lastMenuItem) {
                 $menuLevelOrder = 1;
             } else {
@@ -138,7 +144,11 @@ class MenuItemApiController extends Controller
         $menuItem->level_order = $menuLevelOrder;
         $menuItem->image_class = $imageClass;
 
-        $menuItem->save();
+        try {
+            $menuItem->save();
+        } catch (Exception $ex) {
+            return array("success" => true, "message" => $ex->getMessage(), "data" => null);
+        }
 
         return array("success" => true, "message" => "", "data" => array("menu_item_id" => $menuItem->menu_item_id));
     }
@@ -201,6 +211,127 @@ class MenuItemApiController extends Controller
                 MenuItem::whereNULL('menu_item_parent_id')->where('level_order', '>', $menuItemLevelOrder)
                ->update(['level_order' => DB::raw("level_order - 1")]);
             }
+            DB::commit();
+        } catch (Exception $ex) {
+            DB::rollback();
+            return array("success" => false, "message" => $ex->getMessage());
+        }
+
+        return array("success" => true, "message" => "");
+    }
+
+
+    public function moveDown(Request $request)
+    {
+        $queryString = $request->all();
+
+        $menuItemId = $queryString['menuitemid'];
+
+        $menuItem = MenuItem::where('menu_item_id', '=', $menuItemId)->get()->first();
+
+        if (!$menuItem) {
+            return array("success" => true, "message" => "");
+        }
+ 
+        $menuItemLevelOrder = $menuItem->level_order;
+        $menuItemParentId = $menuItem->menu_item_parent_id;
+
+        //  If this item is the last one, do nothing
+
+        if ($menuItemParentId) {
+            $lastLevelOrder =  MenuItem::where('menu_item_parent_id', '=', $menuItemParentId)->orderBy('level_order', 'desc')->get()->first()->level_order;
+            if ($lastLevelOrder == $menuItemLevelOrder) {
+                return array("success" => true, "message" => "");
+            }
+        } else {
+            $lastLevelOrder =  MenuItem::whereNULL('menu_item_parent_id')->orderBy('level_order', 'desc')->get()->first();
+            if ($lastLevelOrder == $menuItemLevelOrder) {
+                return array("success" => true, "message" => "");
+            }
+        }
+
+        //  This is not the last item
+
+        try {
+            DB::beginTransaction();
+
+            //  Set the item to move's level order to zero to make room for updating other items in menu
+
+            MenuItem::where('menu_item_id', '=', $menuItemId)
+            ->update(['level_order' => 0]);
+
+            //  Set the item who will now be the level order of the item
+
+            if ($menuItemParentId) {
+                MenuItem::where('menu_item_parent_id', '=', $menuItemParentId)->where('level_order', '=', $menuItemLevelOrder + 1)
+               ->update(['level_order' => $menuItemLevelOrder]);
+            } else {
+                MenuItem::whereNULL('menu_item_parent_id')->where('level_order', '=', $menuItemLevelOrder + 1)
+               ->update(['level_order' => $menuItemLevelOrder]);
+            }
+            MenuItem::where('menu_item_id', '=', $menuItemId)
+            ->update(['level_order' => $menuItemLevelOrder + 1]);
+
+            DB::commit();
+        } catch (Exception $ex) {
+            DB::rollback();
+            return array("success" => false, "message" => $ex->getMessage());
+        }
+
+        return array("success" => true, "message" => "");
+    }
+    
+    public function moveUp(Request $request)
+    {
+        $queryString = $request->all();
+
+        $menuItemId = $queryString['menuitemid'];
+
+        $menuItem = MenuItem::where('menu_item_id', '=', $menuItemId)->get()->first();
+
+        if (!$menuItem) {
+            return array("success" => true, "message" => "");
+        }
+
+        $menuItemLevelOrder = $menuItem->level_order;
+        $menuItemParentId = $menuItem->menu_item_parent_id;
+
+        //  If this item is the last one, do nothing
+
+        if ($menuItemParentId) {
+            $lastLevelOrder =  MenuItem::where('menu_item_parent_id', '=', $menuItemParentId)->orderBy('level_order', 'desc')->get()->first();
+            if ($lastLevelOrder == $menuItemLevelOrder) {
+                return array("success" => true, "message" => "");
+            }
+        } else {
+            $lastLevelOrder =  MenuItem::whereNULL('menu_item_parent_id')->orderBy('level_order', 'desc')->get()->first();
+            if ($lastLevelOrder == $menuItemLevelOrder) {
+                return array("success" => true, "message" => "");
+            }
+        }
+
+        //  This is not the last item
+
+        try {
+            DB::beginTransaction();
+
+            //  Set the item to move's level order to zero to make room for updating other items in menu
+
+            MenuItem::where('menu_item_id', '=', $menuItemId)
+         ->update(['level_order' => 0]);
+
+            //  Set the item who will now be the level order of the item
+
+            if ($menuItemParentId) {
+                MenuItem::where('menu_item_parent_id', '=', $menuItemParentId)->where('level_order', '=', $menuItemLevelOrder + 1)
+            ->update(['level_order' => $menuItemLevelOrder]);
+            } else {
+                MenuItem::whereNULL('menu_item_parent_id')->where('level_order', '=', $menuItemLevelOrder + 1)
+            ->update(['level_order' => $menuItemLevelOrder]);
+            }
+            MenuItem::where('menu_item_id', '=', $menuItemId)
+         ->update(['level_order' => menuItemLevelOrder + 1]);
+
             DB::commit();
         } catch (Exception $ex) {
             DB::rollback();

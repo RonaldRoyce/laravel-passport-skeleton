@@ -3,11 +3,195 @@ $(document).ready(function () {
   var roleId = ''
 
   $('.move-down-btn').on('click', function () {
-    var menuId = this.attributes['data-id'].value
+    var menuItemId = this.attributes['data-id'].value
+    var levelOrder = parseInt(this.attributes['data-level-order'].value, 10)
+    var nextLevelOrder = parseInt(levelOrder, 10) + 1
+    var totalItems = $('#menu-items-table tr').length - 1
+
+    $.ajax({
+      url: tokenUrl,
+      type: 'GET',
+      success: function (data, textStatus, jqXHR) {
+        var token = data['access_token']
+        $.ajax({
+          url: menuItemMoveDownUrl,
+          type: 'GET',
+          headers: {
+            Authorization: 'Bearer ' + token,
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          data: {
+            menuitemid: menuItemId
+          },
+          success: function (data, textStatus, jqXHR) {
+            if (data.success) {
+              var thisItem = $('tr[data-level-order="' + levelOrder + '"]')
+              var nextItem = $('tr[data-level-order="' + nextLevelOrder + '"]')
+
+              var thisAnchor = thisItem.find('td:eq(2)').find('a')
+
+              thisAnchor.removeClass('move-down-btn').addClass('move-up-btn')
+
+              thisAnchor[0].attributes[
+                'data-level-order'
+              ].value = nextLevelOrder
+
+              var thisImage = thisItem.find('td:eq(2)').find('i')
+
+              thisImage
+                .removeClass('fa-arrow-alt-circle-down')
+                .removeClass('down-arrow')
+                .addClass('fa-arrow-alt-circle-up')
+                .addClass('up-arrow')
+
+              var nextAnchor = nextItem.find('td:eq(2)').find('a')
+
+              nextAnchor.removeClass('move-up-btn').addClass('move-down-btn')
+
+              nextAnchor[0].attributes['data-level-order'].value = levelOrder
+
+              var nextImage = nextItem.find('td:eq(2)').find('i')
+
+              nextImage
+                .removeClass('fa-arrow-alt-circle-up')
+                .removeClass('up-arrow')
+                .addClass('fa-arrow-alt-circle-down')
+                .addClass('down-arrow')
+
+              thisItem = $('tr[data-level-order="' + levelOrder + '"]')
+              nextItem = $('tr[data-level-order="' + nextLevelOrder + '"]')
+
+              thisItem.remove()
+
+              thisItem.insertAfter(nextItem)
+
+              thisItem = $('tr[data-level-order="' + levelOrder + '"]')
+              nextItem = $('tr[data-level-order="' + nextLevelOrder + '"]')
+
+              thisItem[0].attributes['data-level-order'].value = nextLevelOrder
+              nextItem[0].attributes['data-level-order'].value = levelOrder
+
+              window.location.reload(true)
+            } else {
+              $('#save-message-div')
+                .removeClass('alert-info')
+                .addClass('alert-danger')
+              $('#save-message-div').html(data.message)
+            }
+
+            $('#save-message-div').show()
+
+            return true
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            return false
+          }
+        })
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        if (errorThrown == 'unauthorized') {
+          window.location.href = '/login'
+        }
+        return false
+      }
+    })
   })
 
   $('.move-up-btn').on('click', function () {
-    var menuId = this.attributes['data-id'].value
+    var menuItemId = this.attributes['data-id'].value
+    var levelOrder = parseInt(this.attributes['data-level-order'].value, 10)
+    var nextLevelOrder = parseInt(levelOrder, 10) + 1
+    var totalItems = $('#menu-items-table tr').length - 1
+
+    $.ajax({
+      url: tokenUrl,
+      type: 'GET',
+      success: function (data, textStatus, jqXHR) {
+        var token = data['access_token']
+        $.ajax({
+          url: menuItemMoveUpUrl,
+          type: 'GET',
+          headers: {
+            Authorization: 'Bearer ' + token,
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          data: {
+            menuitemid: menuItemId
+          },
+          success: function (data, textStatus, jqXHR) {
+            if (data.success) {
+              var thisItem = $('tr[data-level-order="' + levelOrder + '"]')
+              var nextItem = $('tr[data-level-order="' + nextLevelOrder + '"]')
+
+              var thisAnchor = thisItem.find('td:eq(2)').find('a')
+
+              thisAnchor.removeClass('move-down-btn').addClass('move-up-btn')
+
+              thisAnchor[0].attributes[
+                'data-level-order'
+              ].value = nextLevelOrder
+
+              var thisImage = thisItem.find('td:eq(2)').find('i')
+
+              thisImage
+                .removeClass('fa-arrow-alt-circle-down')
+                .removeClass('down-arrow')
+                .addClass('fa-arrow-alt-circle-up')
+                .addClass('up-arrow')
+
+              var nextAnchor = nextItem.find('td:eq(2)').find('a')
+
+              nextAnchor.removeClass('move-up-btn').addClass('move-down-btn')
+
+              nextAnchor[0].attributes['data-level-order'].value = levelOrder
+
+              var nextImage = nextItem.find('td:eq(2)').find('i')
+
+              nextImage
+                .removeClass('fa-arrow-alt-circle-up')
+                .removeClass('up-arrow')
+                .addClass('fa-arrow-alt-circle-down')
+                .addClass('down-arrow')
+
+              thisItem = $('tr[data-level-order="' + levelOrder + '"]')
+              nextItem = $('tr[data-level-order="' + nextLevelOrder + '"]')
+
+              thisItem.remove()
+
+              thisItem.insertAfter(nextItem)
+
+              thisItem = $('tr[data-level-order="' + levelOrder + '"]')
+              nextItem = $('tr[data-level-order="' + nextLevelOrder + '"]')
+
+              thisItem[0].attributes['data-level-order'].value = nextLevelOrder
+              nextItem[0].attributes['data-level-order'].value = levelOrder
+
+              window.location.reload(true)
+            } else {
+              $('#save-message-div')
+                .removeClass('alert-info')
+                .addClass('alert-danger')
+              $('#save-message-div').html(data.message)
+            }
+
+            $('#save-message-div').show()
+
+            return true
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            return false
+          }
+        })
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        if (errorThrown == 'unauthorized') {
+          window.location.href = '/login'
+        }
+        return false
+      }
+    })
   })
 
   $('.edit-menu-item-btn').on('click', function () {

@@ -585,7 +585,7 @@ kbd kbd {
 pre {
   display: block;
   font-size: 87.5%;
-  color: #212529;
+  color: #212529; 
 }
 
 pre code {
@@ -603,8 +603,9 @@ pre code {
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
-  margin-right: auto;
+ /* margin-right: auto;
   margin-left: auto;
+  */
 }
 
 @media (min-width: 576px) {
@@ -630,8 +631,10 @@ pre code {
 
 @media (min-width: 1200px) {
   .container {
-    max-width: 1140px;
+    max-width: calc(100% - 320px);
     min-height: calc(100vh - 191px);
+    position: relative;
+    left: 320px;
   }
 }
 
@@ -1890,7 +1893,18 @@ pre code {
   box-shadow: none;
   transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
-
+.form-control-black::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+     color: red;
+     opacity: 1; /* Firefox */
+   }
+   
+.form-control-black::-ms-input-placeholder { /* Internet Explorer 10-11 */
+     color: red;
+   }
+   
+.form-control-black::-ms-input-placeholder { /* Microsoft Edge */
+     color: red;
+   }
 .form-control-black:focus {
      color: #1e1e2f;
      background-color: #ffffff;
@@ -15441,7 +15455,7 @@ i.tim-icons.icon-zoom-split, i.tim-icons.icon-sound-wave {
 
 .main-panel>.navbar {
   margin-bottom: 0;
-  height: 120px;
+  height: 90px;
   margin: 5px;
   width: calc(100% - 40px);
   margin-left: 20px;
@@ -18156,5 +18170,15 @@ th.menu-action {
      margin: auto;
      text-align: center;
      width: 245px;
+}
+
+.up-arrow {
+     font-size: 39px;
+     color: #ff0000;
+}
+
+.down-arrow {
+     font-size: 39px;
+     color: #098809;
 }
 /*# sourceMappingURL=dashboard-free.css.map */

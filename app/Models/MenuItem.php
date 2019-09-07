@@ -45,6 +45,6 @@ class MenuItem extends Model
 
     public function submenuItems()
     {
-        return $this->hasMany('App\Models\MenuItem', 'menu_item_parent_id', 'menu_item_id');
+        return $this->hasMany('App\Models\MenuItem', 'menu_item_parent_id', 'menu_item_id')->orderBy('level_order');
     }
 }

@@ -35,3 +35,5 @@ Route::middleware('client_credentials')->get('/menu/add', 'Api\MenuApiController
 Route::middleware('client_credentials')->get('/menuitem/save', 'Api\MenuItemApiController@saveMenuItem')->name('menuitemsave');
 Route::middleware('client_credentials')->get('/menuitem/add', 'Api\MenuItemApiController@createMenuItem')->name('menuitemadd');
 Route::middleware('client_credentials')->get('/menuitem/delete', 'Api\MenuItemApiController@deleteMenuItem')->name('menuitemdelete');
+Route::middleware('client_credentials')->get('/menuitem/movedown', 'Api\MenuItemApiController@movedown')->name('movedown');
+Route::middleware('client_credentials')->get('/menuitem/moveup', 'Api\MenuItemApiController@moveup')->name('moveup');
